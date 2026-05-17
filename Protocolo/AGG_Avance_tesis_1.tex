@@ -1,0 +1,162 @@
+\documentclass[12pt,spanish]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\title{\textbf{Modelado multiescala de la red metabólica del cáncer de mama:}\\
+	Redes complejas, dinámica no lineal y patrones de Turing}
+\author{Alejandro Guerra González\\
+	Asesor: Dr. Erik César Herrera Hernández\\
+	Facultad de Ciencias Químicas, UASLP}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section{Resumen}
+	
+	Este proyecto propone un marco de biología de sistemas para el estudio del cáncer de mama basado en la integración jerárquica de redes complejas, dinámica de sistemas no lineales y modelos de reacción--difusión. A partir de la reconstrucción de una red metabólica específica del cáncer de mama usando la base de datos KEGG, la red se caracteriza como un sistema complejo, se descompone en comunidades mediante el algoritmo de Louvain y posteriormente se reduce dinámicamente mediante dos enfoques complementarios: separación de escalas de tiempo y renormalización por comunidades. El resultado es un sistema efectivo de ecuaciones diferenciales ordinarias (EDO), con una ecuación representativa por comunidad metabólica.
+	
+	Sobre este sistema reducido se analiza la complejidad dinámica, evaluando estabilidad, robustez y sensibilidad paramétrica. Finalmente, se incorporan términos de difusión para construir modelos de reacción--difusión que permitan estudiar inestabilidades de Turing y la emergencia de patrones espaciales metabólicos. El objetivo final es relacionar la organización topológica de la red, su robustez estructural y su complejidad dinámica con la heterogeneidad metabólica observada en tumores de mama.
+	
+	\section{Introducción y justificación}
+	
+	El cáncer de mama es una enfermedad sistémica caracterizada por una profunda reprogramación metabólica, heterogeneidad intratumoral y alta capacidad de adaptación frente a perturbaciones terapéuticas. Estas propiedades no pueden ser comprendidas adecuadamente mediante enfoques reduccionistas, sino que requieren una perspectiva integradora capaz de capturar interacciones no lineales, organización modular y dinámica multiescala.
+	
+	Las redes metabólicas del cáncer constituyen sistemas complejos donde la robustez funcional emerge de la redundancia, la modularidad y la jerarquía topológica. Sin embargo, esta robustez estructural no implica necesariamente estabilidad dinámica, pudiendo coexistir con regímenes altamente sensibles y propensos a transiciones dinámicas. En este contexto, la biología de sistemas y la teoría de redes complejas proporcionan el marco conceptual para conectar estructura, función y dinámica.
+	
+	La teoría de patrones de Turing ofrece un marco adicional para comprender cómo interacciones locales y difusión diferencial pueden generar heterogeneidad espacial espontánea. Su aplicación al metabolismo del cáncer permite formular hipótesis mecanicistas sobre la aparición de gradientes metabólicos, nichos funcionales y zonificación tumoral.
+	
+	\section{Marco teórico}
+	
+	\subsection{Redes complejas en biología de sistemas}
+	
+	Una red compleja se define como un grafo cuya topología presenta propiedades emergentes no triviales, tales como distribuciones de grado no aleatorias, modularidad y presencia de nodos altamente conectados. En redes metabólicas, los nodos representan metabolitos o reacciones, mientras que las aristas representan transformaciones bioquímicas. Estas redes suelen exhibir topologías de tipo libre de escala, lo que confiere robustez frente a perturbaciones aleatorias y vulnerabilidad frente a ataques dirigidos.
+	
+	\subsection{Comunidades metabólicas y modularidad}
+	
+	La descomposición de la red en comunidades mediante el algoritmo de Louvain permite identificar módulos funcionales altamente interconectados. Estas comunidades pueden interpretarse como unidades metabólicas coherentes, y constituyen la escala mesoscópica natural para la reducción dinámica del sistema.
+	
+	\subsection{Robustez estructural y dinámica}
+	
+	La robustez estructural se refiere a la capacidad de la red para mantener su conectividad global frente a perturbaciones topológicas, mientras que la robustez dinámica describe la persistencia de estados estacionarios o atractores frente a variaciones paramétricas. En sistemas cancerosos, la robustez se asocia a la capacidad adaptativa y a la resistencia terapéutica.
+	
+	\subsection{Complejidad en sistemas dinámicos}
+	
+	Desde la dinámica no lineal, la complejidad se manifiesta mediante la coexistencia de múltiples escalas temporales, sensibilidad a condiciones iniciales, bifurcaciones y emergencia de patrones espacio-temporales. La transición de una red compleja a un sistema de EDO permite estudiar cómo la complejidad estructural se traduce en complejidad dinámica.
+	
+	\subsection{Red metabólica del cáncer de mama}
+	
+	El metabolismo del cáncer de mama involucra metabolitos centrales como glucosa, lactato, glutamina, NADH/NAD$^+$ y ATP, así como rutas clave como la glucólisis aeróbica, el metabolismo de glutamina y lípidos. Estas rutas se encuentran acopladas a vías de señalización como PI3K/Akt/mTOR y HIF-1$\alpha$, integrando metabolismo, señalización celular y microambiente tumoral.
+	
+	\section{Hipótesis y objetivos}
+	
+	\subsection{Hipótesis}
+	
+	La reducción multiescala de la red metabólica del cáncer de mama a nivel de comunidades permite identificar sistemas dinámicos efectivos que exhiben robustez estructural, complejidad dinámica e inestabilidades de tipo Turing responsables de la heterogeneidad metabólica espacial.
+	
+	\subsection{Objetivo general}
+	
+	Desarrollar y analizar un modelo dinámico multiescala de la red metabólica del cáncer de mama, integrando redes complejas, reducción por comunidades y modelos de reacción--difusión para estudiar robustez y complejidad dinámica.
+	
+	\subsection{Objetivos específicos}
+	
+	\begin{itemize}
+		\item Reconstruir y caracterizar la red metabólica del cáncer de mama como red compleja.
+		\item Identificar comunidades metabólicas funcionales mediante el algoritmo de Louvain.
+		\item Derivar un sistema de EDO reducido mediante separación de escalas de tiempo y renormalización.
+		\item Analizar estabilidad, robustez y sensibilidad paramétrica del sistema dinámico.
+		\item Explorar patrones espaciales de tipo Turing en el sistema reducido.
+	\end{itemize}
+	
+	\section{Metodología}
+	
+	\subsection{Fase 1: Reconstrucción y análisis topológico}
+	
+	Se reconstruirá la red metabólica a partir de KEGG y se caracterizará mediante métricas topológicas como grado, centralidad de intermediación, coeficiente de agrupamiento y modularidad, empleando herramientas computacionales en Python.
+	
+	\subsection{Fase 2: Detección de comunidades}
+	
+	Se aplicará el algoritmo de Louvain para identificar comunidades metabólicas, las cuales se interpretarán como módulos funcionales.
+	
+	\subsection{Fase 3: Reducción dinámica}
+	
+	La red será reducida mediante separación de escalas de tiempo y renormalización por comunidades, obteniendo un sistema de ecuaciones diferenciales ordinarias con una ecuación representativa por comunidad.
+	
+	\subsection{Fase 4: Análisis dinámico y robustez}
+	
+	Se evaluará la estabilidad de estados estacionarios, la sensibilidad paramétrica global (índices de Sobol) y la robustez dinámica frente a perturbaciones paramétricas.
+	
+	\subsection{Fase 5: Modelos de reacción--difusión y patrones de Turing}
+	
+	Se incorporarán términos de difusión al sistema reducido para analizar inestabilidades de Turing, realizar simulaciones numéricas y construir un Atlas de Turing metabólico.
+	
+	\section{Tareas del proyecto}
+	
+	\begin{enumerate}
+		\item Revisión bibliográfica en redes complejas, metabolismo del cáncer y dinámica de sistemas.
+		\item Reconstrucción de la red metabólica del cáncer de mama.
+		\item Análisis topológico y detección de comunidades.
+		\item Desarrollo del modelo dinámico completo y reducido.
+		\item Análisis de estabilidad, sensibilidad y robustez.
+		\item Implementación de modelos de reacción--difusión.
+		\item Construcción del Atlas de Turing.
+		\item Análisis e interpretación de resultados.
+		\item Redacción de informes, artículos y tesis.
+	\end{enumerate}
+	
+	\section{Calendario de actividades (24 meses)}
+	
+	\begin{longtable}{c p{6cm} c c c p{3cm}}
+		\caption{Cronograma de actividades del proyecto}\\\
+		\toprule
+		\textbf{ID} & \textbf{Nombre de la actividad} & \textbf{Fecha de inicio} & \textbf{Fecha de terminación} & \textbf{Duración (días)} & \textbf{Precedencia} \\
+		\midrule
+		\endfirsthead
+		
+		\toprule
+		\textbf{ID} & \textbf{Nombre de la actividad} & \textbf{Fecha de inicio} & \textbf{Fecha de terminación} & \textbf{Duración (días)} & \textbf{Precedencia} \\
+		\midrule
+		\endhead
+		P1 & Planificación inicial del proyecto & 26/08/2025 & 18/11/2025 & 147 & -- \\
+		P2 & Elección del tema de investigación & 26/08/2025 & 15/09/2025 & 18 & -- \\
+		P3 & Revisión preliminar de literatura & 28/08/2025 & 06/10/2025 & 130 & -- \\
+		P4 & Definición de objetivos & 26/08/2025 & 28/10/2025 & 46 & -- \\
+		P5 & Desarrollo de la propuesta de investigación & 26/08/2025 & 19/11/2025 & 61 & -- \\
+		\midrule
+		1 & Cursar asignaturas básicas & 18/08/2025 & 18/07/2026 & 130 & -- \\
+		2 & Cursar asignatura optativa I & 18/08/2025 & 02/12/2025 & 494 & -- \\
+		3 & Obtención de la red compleja & 28/10/2025 & 02/11/2025 & 72 & 1 \\
+		4 & Caracterización de la red compleja & 02/11/2025 & 12/11/2025 & 93 & 3 \\
+		5 & Obtención de las comunidades & 12/11/2025 & 20/11/2025 & 122 & 4 \\
+		6 & Obtención de los sistemas de ecuaciones diferenciales ordinarias (SEDO) & 06/01/2026 & 02/03/2026 & 76 & 3,4 \\
+		7 & Simulación y ajuste del modelo & 02/03/2026 & 03/06/2026 & 62 & 6 \\
+		8 & Cursar asignatura optativa II & 19/01/2026 & 17/07/2026 & 162 & 5 \\
+		9 & Obtención del Atlas de Turing para ambos SEDO & 20/08/2026 & 20/12/2026 & 117 & 7 \\
+		10 & Escritura de artículo científico & 20/08/2026 & 20/12/2026 & 197 & 4,8 \\
+		11 & Participación en estancia académica & 01/01/2026 & 10/09/2026 & 252 & 4,9,10 \\
+		12 & Análisis del caso de comunicación intercelular & 01/10/2026 & 01/03/2027 & 151 & 4,15 \\
+		13 & Escritura de la tesis & 01/03/2027 & 01/10/2027 & 214 & 4,9,10 \\
+		14 & Examen previo & 01/10/2027 & 01/11/2027 & 31 & 13 \\
+		15 & Defensa de la tesis de grado & 01/01/2028 & 23/01/2028 & 22 & 14 \\
+		\bottomrule
+	\end{longtable}
+	
+	\section{Resultados esperados}
+	
+	Se espera obtener una caracterización topológica completa de la red metabólica del cáncer de mama, un modelo dinámico reducido interpretable, una cuantificación de la robustez y complejidad del sistema y un Atlas de Turing que relacione parámetros metabólicos con patrones espaciales emergentes.
+	
+	\section{Impacto esperado}
+	
+	Este trabajo contribuirá a un entendimiento sistémico del metabolismo del cáncer de mama, conectando estructura, dinámica y espacio, y generando hipótesis testables sobre heterogeneidad metabólica y posibles vulnerabilidades terapéuticas.
+	
+\end{document}

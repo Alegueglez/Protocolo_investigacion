@@ -1,0 +1,569 @@
+\documentclass[12pt,spanish]{article}
+
+% -------------------------
+% PAQUETES BÁSICOS
+% -------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{csquotes}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{enumitem}  % AÑADIDO: Para listas personalizadas
+\usepackage{xcolor}    % AÑADIDO: Para colores
+\usepackage[numbers]{natbib}
+\bibliographystyle{unsrtnat}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+
+
+% -------------------------
+% CONFIGURACIONES PERSONALIZADAS
+% -------------------------
+% Comandos para objetivos y procedimientos
+\newcommand{\objetivo}[1]{\textbf{\textcolor{blue}{#1}}}
+\newcommand{\procedimiento}{\textbf{Procedimiento:}}
+\newcommand{\sedo}{\text{SEDO}}
+\newcommand{\edp}{\text{EDP}}
+
+% Configuración de listas
+\setlist[enumerate]{label=\arabic*., leftmargin=*}
+\setlist[itemize]{leftmargin=*}
+
+% -------------------------
+% BIBLIOGRAFÍA
+% -------------------------
+\usepackage[numbers]{natbib}
+\bibliographystyle{unsrtnat}  % CORREGIDO: Cambiado de 'unsrt' a 'unsrtnat'
+
+% -------------------------
+% FORMATO DE PÁGINA
+% -------------------------
+\geometry{
+	a4paper,
+	left=3cm,
+	right=3cm,
+	top=3cm,
+	bottom=3cm
+}
+
+\onehalfspacing
+
+% -------------------------
+% DOCUMENTO
+% -------------------------
+\begin{document}
+	
+	\thispagestyle{empty}
+	
+	\begin{figure}[t]
+		\centering
+		\begin{minipage}{0.45\textwidth}
+			\raggedright
+			\includegraphics[height=2.5cm]{uaslp}
+		\end{minipage}
+		\hfill
+		\begin{minipage}{0.45\textwidth}
+			\raggedleft
+			\includegraphics[height=3cm]{fcq1}
+		\end{minipage}
+	\end{figure}
+	
+	\vspace{1cm}
+		
+	\begin{center}
+		\textbf{Universidad Autónoma de San Luis Potosí}\\
+		\vspace{0.2cm}
+		\textbf{Facultad de Ciencias Químicas}\\
+		\vspace{1cm}
+		
+		\textbf{\Large Proyecto de Investigación}\\
+		\vspace{0.8cm}
+		
+		\textbf{Modelos de Reacción--Difusión acoplada a una red metabólica asociada al cáncer de mama}\\
+		\vspace{1cm}
+		
+		\textbf{Autor:} Alejandro Guerra González\\
+		\textbf{Asesor:} Dr. Erik César Herrera Hernández
+	\end{center}
+	
+	\vspace{1cm}
+	
+	% ======================================================
+	\section{Resumen}
+	
+	Este proyecto propone un marco integrado de biología de sistemas para investigar las redes metabólicas del cáncer de mama mediante la combinación de: (1) caracterización topológica como redes complejas, (2) modelado dinámico mediante sistemas de ecuaciones diferenciales ordinarias (SEDO), (3) análisis de sensibilidad paramétrica, y (4) aplicación de la teoría de patrones de Turing mediante la construcción de un Atlas de Turing. El objetivo final es identificar mecanismos de control críticos y patrones espaciales emergentes con potencial relevancia terapéutica.
+	
+	En particular, el concepto de robustez se abordará como la capacidad de la red metabólica para mantener su funcionalidad frente a perturbaciones paramétricas y estructurales, evaluada mediante análisis de sensibilidad global y simulaciones Monte Carlo.
+	
+	% ======================================================
+	\section{Introducción y Justificación}
+	
+	El cáncer de mama es una de las principales causas de mortalidad oncológica a nivel mundial. En 2024, el cáncer de mama fue la primera causa de muerte entre los tumores malignos en México (INEGI, 2025); el 99.2\,\% ocurrieron en mujeres. Esta enfermedad se caracteriza por una heterogeneidad molecular, clínica y metabólica que complica su tratamiento y pronóstico. Una de las características distintivas de las células cancerosas es la reprogramación metabólica, mediante la cual estas alteran su metabolismo para sostener la proliferación descontrolada, la supervivencia en condiciones adversas y la invasión tisular \cite{Hanahan2011}.
+	
+	Las redes metabólicas son sistemas dinámicos y adaptativos cuyas propiedades emergentes no pueden comprenderse únicamente mediante enfoques reduccionistas. La topología de estas redes influye directamente en su funcionamiento, robustez y capacidad de respuesta a perturbaciones \cite{Barabasi2004}. Sin embargo, la caracterización estructural resulta insuficiente para explicar la aparición de patrones espaciales y temporales observados en tumores \cite{Gatenby2004,Zhang2017}.
+	
+	Desde el punto de vista teórico, la robustez, modularidad y jerarquía de las redes complejas se interpretan como propiedades emergentes que influyen directamente en la estabilidad dinámica del sistema metabólico y su capacidad adaptativa.
+	
+	En este contexto, la teoría de patrones de Turing ofrece un marco matemático poderoso para entender cómo sistemas homogéneos pueden desarrollar patrones espaciales estables a partir de interacciones entre componentes con diferentes tasas de difusión. La hipótesis central plantea que las redes metabólicas del cáncer de mama pueden exhibir inestabilidades de Turing que conduzcan a patrones espaciales de concentración de metabolitos \cite{Brennan2025,Turing1990}.
+	
+	% ======================================================
+		\section{Antecedentes}
+	
+	\subsection{La reprogramación metabólica como sello distintivo del cáncer}
+	
+	La reprogramación metabólica es reconocida como uno de los sellos distintivos del cáncer, ya que permite a las células tumorales satisfacer las demandas energéticas, biosintéticas y redox necesarias para sostener una proliferación acelerada y sobrevivir en microambientes adversos. Este fenómeno implica alteraciones coordinadas en múltiples rutas metabólicas, incluyendo glucólisis aeróbica (efecto Warburg), metabolismo de glutamina, biosíntesis de lípidos y regulación del balance redox \cite{Hanahan2011,Pavlova2016}.
+	
+	En el cáncer de mama, la reprogramación metabólica presenta una fuerte dependencia del subtipo molecular y del contexto microambiental. Estudios experimentales han demostrado que diferentes subtipos exhiben perfiles metabólicos diferenciados, asociados a variaciones en la actividad mitocondrial, uso de nutrientes alternativos y adaptación a hipoxia \cite{Zhang2017}. Estas adaptaciones no son resultado de cambios aislados, sino de la reorganización global de redes metabólicas interconectadas.
+	
+	Desde la perspectiva de ingeniería química, estas modificaciones pueden interpretarse como cambios en la topología y en los parámetros cinéticos de un sistema dinámico, lo que motiva la necesidad de modelos que integren múltiples escalas y rutas metabólicas de manera simultánea.
+	
+	\subsection{La perspectiva de redes complejas en biología de sistemas}
+	
+	La biología de sistemas propone que las propiedades funcionales de los sistemas biológicos emergen de la interacción no lineal entre sus componentes, más que de la acción aislada de elementos individuales. En este marco, las redes complejas proporcionan una representación formal para estudiar la organización estructural de sistemas metabólicos, donde los nodos representan metabolitos o enzimas y las aristas representan interacciones bioquímicas \cite{Barabasi2004}.
+	
+	Las redes metabólicas presentan propiedades características de sistemas complejos, tales como distribución de grado heterogénea, modularidad, jerarquía y presencia de hubs altamente conectados. En cáncer, estas propiedades se ven alteradas por mutaciones, cambios epigenéticos y regulación aberrante, lo que conduce a una redistribución de flujos metabólicos y a una mayor robustez frente a perturbaciones externas \cite{Resendis2010}.
+	
+	Sin embargo, los análisis basados exclusivamente en métricas topológicas son inherentemente estáticos y no capturan la dinámica temporal ni la respuesta del sistema ante perturbaciones paramétricas. Por ello, es necesario complementar la caracterización estructural con modelos dinámicos que permitan estudiar estabilidad, transiciones dinámicas y control metabólico.
+	
+	\subsection{Estudio dinámico de las especies}
+	
+	El estudio dinámico de redes metabólicas se realiza comúnmente mediante sistemas de ecuaciones diferenciales ordinarias que describen la evolución temporal de las concentraciones de metabolitos en función de las tasas de reacción. Estos modelos se construyen a partir de la matriz estequiométrica y leyes cinéticas que reflejan los mecanismos bioquímicos subyacentes \cite{Liebermeister2010}.
+	
+	En el contexto del cáncer, los modelos dinámicos permiten analizar la estabilidad de estados estacionarios, la aparición de oscilaciones metabólicas y la respuesta a perturbaciones farmacológicas. No obstante, el tamaño y la complejidad de las redes metabólicas reales conducen a sistemas de alta dimensión, con un gran número de parámetros cinéticos poco conocidos, lo que dificulta su análisis directo \cite{Cornish2013}.
+	
+	Esta limitación ha impulsado el desarrollo de técnicas de reducción de modelos, tales como separación de escalas de tiempo y renormalización, que permiten conservar la dinámica esencial del sistema mientras se reduce su complejidad computacional.
+	
+	\subsection{Necesidad de modelos espaciotemporales}
+	
+	Los tumores sólidos presentan una marcada heterogeneidad espacial debido a gradientes de oxígeno, nutrientes, pH y señales mecánicas en el microambiente tumoral. Estos gradientes generan regiones metabólicamente diferenciadas dentro del mismo tumor, lo que influye en la proliferación celular, la resistencia a fármacos y la progresión tumoral \cite{Gatenby2004,Swartz2013}.
+	
+	Los modelos puramente temporales no son capaces de capturar esta heterogeneidad espacial. En contraste, los modelos de reacción--difusión basados en ecuaciones en derivadas parciales permiten describir simultáneamente la cinética local de las reacciones metabólicas y el transporte espacial de metabolitos mediante difusión efectiva.
+	
+	Desde una perspectiva de ingeniería química, estos modelos son análogos a sistemas de reacción--difusión utilizados en procesos catalíticos y transporte en medios porosos, lo que proporciona un marco matemático bien establecido para el análisis de patrones espaciales emergentes.
+	
+	\subsection{La teoría de Turing}
+	
+	La teoría de patrones de Turing establece que un sistema dinámico puede desarrollar patrones espaciales estables a partir de un estado homogéneo cuando la interacción entre reacción y difusión induce una inestabilidad selectiva de ciertos modos espaciales \cite{Turing1990}. Este mecanismo requiere, en general, la interacción entre especies con funciones opuestas (activador--inhibidor) y coeficientes de difusión significativamente diferentes.
+	
+	Desde su formulación original, la teoría de Turing ha sido aplicada exitosamente para explicar patrones en biología del desarrollo, como la formación de rayas y manchas en tejidos \cite{Kondo2010}. Más recientemente, se ha propuesto que mecanismos análogos podrían operar en sistemas metabólicos, donde metabolitos o señales bioquímicas desempeñan roles funcionales diferenciados.
+	
+	En el contexto del cáncer, la aplicación de la teoría de Turing ofrece una vía novedosa para entender la emergencia de heterogeneidad metabólica espacial como un fenómeno dinámico autoorganizado, en lugar de una simple consecuencia pasiva del microambiente.
+	
+	\subsection{Oportunidad de innovación}
+	
+	A pesar de los avances en el análisis estructural y dinámico de redes metabólicas, existe una brecha significativa en la integración sistemática de redes complejas, reducción de modelos y teoría de patrones en el estudio del cáncer. En particular, no se ha explorado de manera exhaustiva la posibilidad de que redes metabólicas completas exhiban inestabilidades de Turing bajo condiciones fisiológicamente plausibles.
+	
+	Este proyecto propone abordar esta brecha mediante un enfoque integrador que combina caracterización topológica, modelado dinámico reducido, análisis de sensibilidad y extensión espaciotemporal. La construcción de un Atlas de Turing metabólico representa una contribución conceptual y metodológica innovadora, con el potencial de generar nuevas hipótesis sobre control metabólico, heterogeneidad tumoral y posibles blancos terapéuticos.
+
+	% ======================================================
+	\section{Objetivos}
+	
+	\subsection*{Hipótesis}
+	
+	La interacción no lineal entre metabolitos claves de cáncer de mamas, junto con diferencias en escalas de difusión, puede dar lugar a inestabilidades tipo Turing responsable de patrones espaciales observados en tumores. 
+	
+	\subsection*{Objetivo General}
+	
+	Diseñar y simular un modelo dinámico de reacción-difusión de la red metabólica del cáncer de mama, a partir de su representación como red compleja y su conversión en un sistema de ecuaciones diferenciales, con el fin de identificar condiciones paramétricas que generen inestabilidades de Turing y patrones espaciales emergentes en la distribución de metabolitos. 
+	
+	\subsection*{Objetivos Específicos}
+	
+	% Objetivo 1
+	\subsubsection*{1. Reconstruir y caracterizar topológicamente la red metabólica del cáncer de mama como un sistema complejo, identificando sus módulos funcionales y nodos críticos (hubs y conectividad).}
+	
+	\procedimiento
+	
+	\begin{enumerate}
+		\item \textbf{Reconstrucción de la Red:} Se utilizará la base de datos genómica KEGG, específicamente los datos de cáncer de mama para construir un modelo metabólico a escala genómica, representado como un grafo dirigido donde los nodos son metabolitos y las aristas son reacciones catalizadas por enzimas \cite{brunk2018, caspi2020}.
+		
+		\item \textbf{Análisis Topológico:} Empleando NetworkX, se calcularán métricas estructurales clave \cite{hagberg2008, shannon2003}:
+		\begin{itemize}
+			\item \textbf{Grado (Degree):} Para identificar metabolitos altamente conectados (hubs) \cite{Barabasi2004}.
+			\item \textbf{Intermediación (Betweenness Centrality):} Para detectar nodos que actúan como conectores esenciales entre módulos (cuellos de botella) \cite{joy2005}.
+			\item \textbf{Coeficiente de Agrupamiento (Clustering Coefficient):} Para evaluar la modularidad y la tendencia a formar "cliques" funcionales \cite{watts1998}.
+		\end{itemize}
+		
+		\item \textbf{Análisis de Comunidades:} Se aplicará el algoritmo de Louvain para descomponer la red en módulos o comunidades altamente interconectadas, correspondientes a vías metabólicas coordinadas \cite{blondel2008}.
+	\end{enumerate}
+	
+	% Objetivo 2
+	\subsubsection*{2. Desarrollar un modelo dinámico determinista de la red, basado en un Sistema de Ecuaciones Diferenciales Ordinarias (SEDO), que describa la cinética de las concentraciones metabólicas.}
+	
+	\procedimiento
+	
+	\begin{enumerate}
+		\item \textbf{Derivación del Sistema de EDO:} El procedimiento parte directamente de la matriz de estequiometría de la red metabólica. Cada reacción se traduce en términos cinéticos, y la suma ponderada de flujos entrantes y salientes define la dinámica temporal de cada metabolito.
+		
+		\item \textbf{Sistema de ecuaciones diferenciales ordinarias:} A partir de las relaciones entre los nodos (aristas), se construirá un sistema de ecuaciones diferenciales ordinarias para la red completa.
+		
+		\item \textbf{Selección del Subconjunto Crítico:} A partir de los nodos críticos y módulos identificados en el Objetivo 1, se seleccionará un subconjunto de metabolitos y reacciones centrales para el modelado dinámico detallado (ej., vía glicolítica, ciclo de Krebs, metabolismo de glutamina). Serán comparados los resultados de ambos SEDO.
+		
+		\item \textbf{Formulación de cada SEDO:} Para cada metabolito $X_i$, se planteará una ecuación de balance de masa \cite{Liebermeister2010}:
+		\[
+		\frac{dX_i}{dt} = \sum_{j=1}^{m} S_{ij} V_j(\mathbf{X}, \mathbf{p})
+		\]
+		donde $S_{ij}$ es la matriz estequiométrica y $V_j$ representa la ley de velocidad de cada reacción (ej., cinética de Michaelis-Menten, acción de masas, etc.) \cite{Cornish2013}.
+		
+		\item \textbf{Estimación de Parámetros:} Los parámetros cinéticos ($\mathbf{p}$) se obtendrán de bases de datos (BRENDA, SABIO-RK) y literatura especializada \cite{chang2021, wittig2012}. En caso de datos faltantes, se emplearán algoritmos de ajuste por optimización (ej., mínimos cuadrados) utilizando datos de estado estacionario de la red \cite{stanford2013}.
+	\end{enumerate}
+	
+	% Objetivo 3
+	\subsubsection*{3. Realizar un análisis de sensibilidad paramétrica global del SEDO para cuantificar la influencia de cada parámetro cinético en el comportamiento del sistema y priorizar aquellos con mayor impacto.}
+	
+	\procedimiento
+	
+	\begin{enumerate}
+		\item \textbf{Muestreo del Espacio Paramétrico:} Se utilizará el método de Saltelli para generar un conjunto amplio y representativo de combinaciones de parámetros dentro de rangos fisiológicamente plausibles \cite{mckay1979}.
+		
+		\item \textbf{Análisis de Sensibilidad de Sobol:} Se aplicará este método de sensibilidad global basado en varianza para calcular \cite{sobol2001, saltelli2010}:
+		\begin{itemize}
+			\item \textbf{Índices de Sobol de primer orden:} Miden la contribución directa de cada parámetro a la varianza de la salida (ej., concentración de un metabolito clave).
+			\item \textbf{Índices de Sobol totales:} Miden la contribución total de cada parámetro, incluyendo sus interacciones con otros.
+		\end{itemize}
+		
+		\item \textbf{Ranking de Sensibilidad:} Los parámetros se clasificarán según sus índices totales, identificando los \textbf{parámetros clave} (los más influyentes) que serán candidatos para el estudio de patrones de Turing.
+	\end{enumerate}
+	
+	% Objetivo 4
+	\subsubsection*{4. Construir y resolver un modelo de reacción-difusión (EDP) para pares de metabolitos candidatos, con el fin de identificar condiciones que satisfagan los criterios de inestabilidad de Turing.}
+	
+	\procedimiento
+	
+	\begin{enumerate}
+		\item \textbf{Selección de Pares Candidatos:} Basándose en el análisis topológico (Objetivo 1) y el ranking de sensibilidad (Objetivo 3), se seleccionarán pares de metabolitos que cumplan roles potenciales de \textbf{activador} (metabolito autocatalítico o de corto alcance) e \textbf{inhibidor} (metabolito de largo alcance o que suprima la producción del activador), inspirándose en principios bioquímicos \cite{Kondo2010}.
+		
+		\item \textbf{Formulación del Modelo de Turing:} Para un par $(u, v)$, se planteará el sistema clásico de reacción-difusión \cite{turing1952}:
+		\begin{align*}
+			\frac{\partial u}{\partial t} &= f(u,v) + D_u \nabla^2 u \\
+			\frac{\partial v}{\partial t} &= g(u,v) + D_v \nabla^2 v
+		\end{align*}
+		donde $f$ y $g$ son las funciones de reacción no lineal derivadas del SEDO, y $D_u$, $D_v$ son sus coeficientes de difusión efectivos.
+		
+		\item \textbf{Análisis de Linealización y Condiciones de Turing:}
+		\begin{itemize}
+			\item Se linealizará el sistema alrededor de su estado estacionario homogéneo.
+			\item Se calculará el Jacobiano y se analizará su espectro.
+			\item Se verificará matemáticamente la \textbf{condición de Turing:} el estado homogéneo debe ser estable en ausencia de difusión (todos los autovalores del Jacobiano con parte real negativa), pero debe volverse inestable para algún número de onda $k > 0$ cuando $D_v \gg D_u$ \cite{alarcon2004, murray2012}.
+		\end{itemize}
+	\end{enumerate}
+	
+	% Objetivo 5
+	\subsubsection*{5. Realizar un barrido paramétrico sistemático y simulaciones numéricas para generar un "Atlas de Turing" que catalogue los patrones espaciales emergentes (manchas, rayas, híbridos) en función de los parámetros clave del sistema.}
+	
+	\procedimiento
+	
+	\begin{enumerate}
+		\item \textbf{Barrido Paramétrico:} Se variarán sistemáticamente los parámetros clave identificados (ej., tasas de producción/degradación, coeficientes de difusión) en un rango amplio. Para cada combinación, se verificará numéricamente el cumplimiento de las condiciones de Turing.
+		
+		\item \textbf{Simulación Numérica de Patrones:} En las regiones del espacio de parámetros donde se cumplan las condiciones, se resolverán numéricamente las EDPs de reacción-difusión en dominios espaciales 1D y 2D. Se utilizarán métodos numéricos robustos implementados en bibliotecas de Python como \texttt{py-pde} (método de líneas) \cite{logg2012} o \texttt{Fipy} (volúmenes finitos).
+		
+		\item \textbf{Clasificación y Catalogación:} Los patrones resultantes (perfiles de concentración espacial) se clasificarán morfológicamente (ej., manchas aisladas, rayas periódicas, patrones mixtos) siguiendo taxonomías establecidas en sistemas de Turing \cite{Kondo2010}.
+		
+		\item \textbf{Construcción del Atlas:} Se creará un mapa multidimensional (el Atlas de Turing) que relacione cada región del espacio de parámetros con el tipo de patrón emergente, sirviendo como un recurso predictivo de la heterogeneidad metabólica espacial esperada bajo distintas condiciones fisiológicas o patológicas. Este concepto de "atlas paramétrico" está inspirado en trabajos de dinámica de sistemas complejos \cite{strogatz2015}.
+	\end{enumerate}
+	
+	% ======================================================
+	\section{Metodología}
+	
+	\subsection*{Fase 1: Caracterización de Redes Complejas}
+	
+	La red genómica del cáncer de mama (entrada KEGG: \texttt{hsa05224}) disponible en la base de datos KEGG (Kyoto Encyclopedia of Genes and Genomes) es el punto de partida para este trabajo. Esta red genómica está organizada por subtipos moleculares, vías dominantes y consecuencias biológicas; por lo que describe el espacio biológico completo del cáncer de mama. Además representa un repositorio de interacciones moleculares y genómicas experimentalmente validadas que caracterizan las condiciones fisiológicas patológicas del cáncer de mama, incluyendo:
+	
+	Cascadas de señalización oncogénicas (e.g., PI3K-AKT, MAPK, Wnt)
+	Mecanismos de regulación transcripcional alterados
+	Reprogramación metabólica asociada a la transformación maligna y progresión tumoral
+	
+	Cada luminal representa una etapa de evolución de los tumores de mama que va desde la etapa temprana e intermedia donde existe una dependencia hormonal hasta las etapas avanzadas donde presenta un alto potencial invasivo, con alta inestabilidad genómica independiente. Esta red completa cuenta con 190 especies repartidas como muestra la tabla ~\ref{tab:terapeuticas}:
+	\begin{table}[h]
+		\centering
+		\caption{Tabla 1: Clasificación de dianas terapéuticas en investigación oncológica}
+		\begin{tabular}{|l|c|}
+			\hline
+			\textbf{Tipo} & \textbf{Especies} \\
+			\hline
+			Receptores y ligandos & $\sim$25 \\
+			MAPK + PI3K & $\sim$25 \\
+			Wnt / Notch & $\sim$18 \\
+			Ciclo celular & $\sim$15 \\
+			Transcripción & $\sim$8 \\
+			Daño ADN & $\sim$12 \\
+			Angiogénesis & $\sim$4 \\
+			\hline
+			\textbf{Total} & $\approx$ 180-200 \\
+			\hline
+		\end{tabular}
+		\label{tab:terapeuticas}
+	\end{table}
+	
+	Los datos de la ruta se recuperaron utilizando la API REST de KEGG y se analizaron mediante códigos escritos en Python. El proceso de construcción involucra varios pasos clave:
+	\begin{enumerate}
+		\item \textbf{Identificación de Nodos:} Se extrajeron todas las entidades moleculares dentro de \texttt{hsa05224}. Esto resultó en dos tipos distintos de nodos: \textit{(i)} enzimas metabólicas y proteínas de señalización, identificadas por Orthología KEGG (KO) o identificadores de genes con prefijo 'hsa' (ej. \texttt{hsa:3099} para HK2), y \textit{(ii)} compuestos químicos y metabolitos, identificados por identificadores de Compuesto con prefijo 'cpd' (ej. \texttt{cpd:C00031} para D-Glucosa).
+		\item \textbf{Definición de Aristas:} Las interacciones binarias entre nodos se definieron basándose en los datos relacionales dentro del archivo KGML (KEGG Markup Language). Se estableció una arista $e_{ij}$ desde el nodo $i$ al nodo $j$ para representar una interacción bioquímica dirigida. 
+		\item \textbf{Simplificación y Validación de la Red:} Para enfocarnos en la red de interacciones metabólicas central, los nodos sin conexiones al metabolismo central del carbono, metabolismo de aminoácidos o vías redox fueron revisados manualmente. Se excluyeron nodos aislados e interacciones no directamente relevantes para el flujo metabólico (ej. asociaciones de enfermedades puramente diagnósticas), asegurando la coherencia funcional de la red para el modelado dinámico.
+	\end{enumerate}
+	
+	Este flujo de trabajo produce una red compleja que comprende V nodos y E aristas. La red no es un simple mapa metabólico sino una red \textit{metabólico-regulatoria} integrada, ya que incluye tanto las transformaciones metabólicas como las proteínas de señalización clave que las regulan.
+	
+	\subsubsection{Representación en Grafos}
+	Para el análisis computacional, la red se formalizará como un grafo dirigido $G = (V, E)$, donde $V = \{v_1, v_2, ..., v_{158}\}$ es el conjunto de vértices (nodos) y $E \subseteq V \times V$ es el conjunto de pares ordenados que representan aristas dirigidas. Cada arista $e_{ij} = (v_i, v_j) \in E$ significa una influencia bioquímica dirigida de $v_i$ a $v_j$.
+	
+	La conectividad del grafo se codifica en una matriz de adyacencia $\mathbf{A}$ de dimensiones $V \times V$, donde el elemento $a_{ij}$ se define como:
+	\[
+	a_{ij} = 
+	\begin{cases} 
+		1 & \text{si existe una arista desde el nodo } i \text{ al nodo } j \\
+		0 & \text{en caso contrario.}
+	\end{cases}
+	\]
+	
+	Esta formalización matemática nos permite aplicar un conjunto de algoritmos de teoría de grafos pertenecientes a las bibliotecas de Python (\texttt{networkx}, \texttt{igraph}) para calcular métricas topológicas (grado, centralidad, longitudes de camino), detectar comunidades e identificar motivos críticos de red. El flujo de trabajo asegura que la red resultante sea un reflejo fiel de la biología del tumor y, simultáneamente, un modelo óptimo para la biología de sistemas. Esta integración proporciona una base robusta para descubrir vulnerabilidades estructurales con relevancia clínica y potencial farmacológico.
+	
+	\subsection{Detección de Comunidades en la red Metabólica}
+	
+	Para descubrir la organización funcional de la red metabólica del cáncer de mama, empleamos el algoritmo de Louvain, un método heurístico optimizado para identificar comunidades de alta modularidad en redes grandes. Este algoritmo opera a través de un proceso iterativo de dos fases que maximiza la métrica de modularidad $Q$, definida como:
+	\[
+	Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \gamma \frac{k_i k_j}{2m} \right] \delta(c_i, c_j),
+	\]
+	donde $A_{ij}$ es el elemento de la matriz de adyacencia, $k_i$ y $k_j$ son los grados de los nodos $i$ y $j$, $m$ es el número total de aristas, $\gamma$ es un parámetro de resolución que controla el tamaño de la comunidad, y $\delta(c_i, c_j)$ es igual a 1 si los nodos $i$ y $j$ pertenecen a la misma comunidad y 0 en caso contrario.
+	
+	\subsubsection{Implementación y Selección de Parámetros}
+	El algoritmo procede de la siguiente manera: Primero, cada nodo se asigna a su propia comunidad. Luego, en una serie de iteraciones, cada nodo se mueve a la comunidad de sus vecinos si este movimiento aumenta la modularidad general $Q$. Posteriormente, se construye una nueva red donde los nodos representan las comunidades encontradas, y el proceso se repite iterativamente hasta lograr la modularidad máxima. Utilizamos un parámetro de resolución $\gamma = 1.0$, que representa la suposición del modelo nulo estándar donde no existen diferencias en la detección de comunidades es particularmente grandes o pequeños. Esta elección de parámetro produjo una partición con modularidad óptima $Q = 0.42$, significativamente mayor que las expectativas de redes aleatorias ($Q_{\text{random}} \approx 0.12 \pm 0.03$), confirmando una fuerte estructura comunitaria más allá de la organización aleatoria.\\
+	
+	\subsection*{Fase 2: Desarrollo del SEDO}
+	
+	El modelo reducido de ecuaciones diferenciales ordinarias (EDO) se derivó sistemáticamente del análisis topológico y funcional del núcleo metabólico. En lugar de intentar modelar los 158 componentes de la red, aplicamos dos estrategias para la obtención de un Sistema de Ecuaciones Diferenciales Ordinarios (SEDO), estos son:
+		\subsubsection{Escalas de tiempo}
+	
+	La reducción del modelo dinámico también se abordará mediante el método de separación de escalas de tiempo, una técnica clásica en ingeniería química y biología de sistemas que permite simplificar sistemas dinámicos de alta dimensión cuando coexisten procesos que evolucionan a velocidades significativamente diferentes.
+	
+	En redes metabólicas, esta condición surge de manera natural debido a la coexistencia de reacciones rápidas (por ejemplo, equilibrios enzimáticos o reacciones cuasi-instantáneas) y procesos lentos asociados a regulación metabólica, cambios en concentración de metabolitos clave o adaptación celular. Bajo esta premisa, el sistema dinámico general:
+	\[
+	\frac{d\mathbf{X}}{dt} = \mathbf{S}\mathbf{v}(\mathbf{X},\boldsymbol{\theta})
+	\]
+	puede descomponerse en dos subconjuntos de variables:
+	\[
+	\mathbf{X} = (\mathbf{X}_f, \mathbf{X}_s),
+	\]
+	donde $\mathbf{X}_f$ representa las variables rápidas y $\mathbf{X}_s$ las variables lentas.
+	
+	El sistema dinámico completo puede escribirse entonces como:
+	\begin{align*}
+		\varepsilon \frac{d\mathbf{X}_f}{dt} &= \mathbf{f}(\mathbf{X}_f, \mathbf{X}_s), \\
+		\frac{d\mathbf{X}_s}{dt} &= \mathbf{g}(\mathbf{X}_f, \mathbf{X}_s),
+	\end{align*}
+	donde $0 < \varepsilon \ll 1$ es un parámetro adimensional que cuantifica la separación entre las escalas temporales.
+	
+	En el límite $\varepsilon \to 0$, las variables rápidas alcanzan un estado cuasi-estacionario definido implícitamente por:
+	\[
+	\mathbf{f}(\mathbf{X}_f, \mathbf{X}_s) = 0.
+	\]
+	Esta relación permite expresar $\mathbf{X}_f$ como una función de las variables lentas:
+	\[
+	\mathbf{X}_f = \boldsymbol{\phi}(\mathbf{X}_s),
+	\]
+	lo cual conduce a un sistema reducido que describe únicamente la dinámica lenta:
+	\[
+	\frac{d\mathbf{X}_s}{dt} = \mathbf{g}(\boldsymbol{\phi}(\mathbf{X}_s), \mathbf{X}_s).
+	\]
+	
+	La identificación de las variables rápidas y lentas se realizará combinando criterios bioquímicos y topológicos. En particular, se considerarán como candidatas a variables rápidas aquellas especies:
+	\begin{itemize}
+		\item Asociadas a reacciones con constantes cinéticas elevadas.
+		\item Con alta conectividad local pero baja centralidad global.
+		\item Que participen en ciclos metabólicos cerrados de equilibrio rápido.
+	\end{itemize}
+	
+	Por el contrario, las variables lentas corresponderán a metabolitos reguladores, nodos con alta intermediación o especies que controlan flujos metabólicos intermodulares, ya que su dinámica gobierna la evolución global del sistema.
+	
+	Desde el punto de vista matemático, este procedimiento preserva la estabilidad de los estados estacionarios relevantes y reduce el sistema a una dimensión manejable, manteniendo la estructura no lineal necesaria para el análisis de bifurcaciones e inestabilidades de tipo Turing. Además, el modelo reducido obtenido por escalas de tiempo servirá como uno de los candidatos principales para su extensión a ecuaciones de reacción--difusión en el espacio.
+	
+	Finalmente, los resultados del modelo reducido serán comparados con los obtenidos mediante el método de renormalización, evaluando la coherencia dinámica, la capacidad predictiva y la sensibilidad paramétrica de ambos enfoques. Esta comparación permitirá seleccionar el esquema de reducción más adecuado para la construcción del Atlas de Turing metabólico.
+	
+	
+	\subsubsection{Método de Renormalización}
+	
+	Como estrategia complementaria a la separación de escalas de tiempo, se empleará el método de renormalización para la reducción sistemática del sistema dinámico asociado a la red metabólica. Este enfoque, inspirado en la teoría de grupos de renormalización aplicada a sistemas complejos, permite identificar variables colectivas o efectivas que capturan el comportamiento dinámico dominante del sistema sin necesidad de resolver explícitamente todas las ecuaciones microscópicas.
+	
+	La idea central consiste en agrupar subconjuntos de nodos altamente interconectados —identificados previamente como comunidades metabólicas mediante el algoritmo de Louvain— y reemplazarlos por variables macroscópicas renormalizadas que representen el estado dinámico promedio del módulo. Matemáticamente, si una comunidad $C_\alpha$ está compuesta por un conjunto de metabolitos $\{X_i\}_{i \in C_\alpha}$, se define una variable efectiva:
+	\[
+	Y_\alpha = \sum_{i \in C_\alpha} w_i X_i,
+	\]
+	donde $w_i$ son coeficientes de ponderación que reflejan la importancia topológica y funcional de cada nodo, tales como centralidad de intermediación, grado o flujo metabólico promedio.
+	
+	El sistema original de ecuaciones:
+	\[
+	\frac{d\mathbf{X}}{dt} = \mathbf{S}\mathbf{v}(\mathbf{X},\boldsymbol{\theta})
+	\]
+	se transforma, mediante esta proyección, en un sistema renormalizado de menor dimensión:
+	\[
+	\frac{d\mathbf{Y}}{dt} = \mathbf{F}(\mathbf{Y},\boldsymbol{\Theta}),
+	\]
+	donde $\mathbf{Y}$ es el vector de variables efectivas y $\boldsymbol{\Theta}$ representa parámetros renormalizados que incorporan la dinámica interna de cada comunidad.
+	
+	Este procedimiento preserva las propiedades dinámicas esenciales del sistema, tales como estabilidad de estados estacionarios, bifurcaciones e interacciones no lineales dominantes, mientras reduce significativamente la complejidad computacional. En particular, la renormalización permite:
+	\begin{itemize}
+		\item Eliminar grados de libertad redundantes o débilmente acoplados.
+		\item Conservar la influencia de hubs metabólicos y cuellos de botella funcionales.
+		\item Facilitar el acoplamiento posterior con modelos de reacción--difusión.
+	\end{itemize}
+	
+	Desde una perspectiva bioquímica, las variables renormalizadas representan el comportamiento agregado de vías metabólicas completas (por ejemplo, glucólisis, metabolismo de glutamina o balance redox), lo que resulta especialmente adecuado para el estudio de patrones espaciales emergentes a escala tisular.
+	
+	Finalmente, el sistema renormalizado será comparado cuantitativamente con el SEDO completo y con el modelo reducido por escalas de tiempo, evaluando la fidelidad dinámica mediante la comparación de estados estacionarios, respuestas transitorias y sensibilidad paramétrica. Este análisis permitirá seleccionar el modelo más adecuado para la construcción del Atlas de Turing metabólico.
+	
+	
+	
+	
+		\subsection*{Fase 3: Análisis de Sensibilidad}
+	
+	Dado que los modelos dinámicos de redes metabólicas involucran un gran número de parámetros cinéticos con incertidumbre inherente, se realizará un análisis de sensibilidad paramétrica global con el objetivo de cuantificar la influencia relativa de cada parámetro sobre el comportamiento dinámico del sistema y priorizar aquellos con mayor impacto funcional.
+	
+	El análisis de sensibilidad cumple un doble propósito: \textit{(i)} evaluar la robustez del sistema frente a perturbaciones paramétricas y \textit{(ii)} identificar los parámetros clave que gobiernan la estabilidad, la aparición de inestabilidades y la generación de patrones espaciales en los modelos de reacción--difusión.
+	
+	\subsubsection*{Muestreo del Espacio Paramétrico}
+	
+	El espacio de parámetros $\boldsymbol{\theta} = (\theta_1, \theta_2, \ldots, \theta_p)$ se explorará mediante un muestreo global basado en el esquema de Saltelli, una extensión del muestreo de tipo Latin Hypercube que permite el cálculo eficiente de índices de sensibilidad de Sobol.
+	
+	Para cada parámetro cinético se definirá un intervalo de variación fisiológicamente plausible, basado en datos experimentales reportados en la literatura y bases de datos especializadas (BRENDA, SABIO-RK). En ausencia de información directa, se considerarán variaciones de uno a dos órdenes de magnitud alrededor del valor nominal estimado.
+	
+	El muestreo generará un conjunto de realizaciones $\{\boldsymbol{\theta}^{(k)}\}_{k=1}^N$, donde $N$ será suficientemente grande para garantizar la convergencia estadística de los índices de sensibilidad.
+	
+	\subsubsection*{Definición de Variables de Salida}
+	
+	Las salidas del modelo empleadas para el análisis de sensibilidad incluirán:
+	\begin{itemize}
+		\item Concentraciones estacionarias de metabolitos clave.
+		\item Flujos metabólicos dominantes en estado estacionario.
+		\item Autovalores del Jacobiano evaluado en el estado estacionario, como medida indirecta de estabilidad dinámica.
+	\end{itemize}
+	
+	Estas métricas permiten vincular directamente la sensibilidad paramétrica con propiedades dinámicas relevantes para la aparición de inestabilidades de Turing.
+	
+	\subsubsection*{Cálculo de Índices de Sobol}
+	
+	Se calcularán los índices de Sobol de primer orden $S_i$ y totales $S_{T_i}$, definidos como:
+	\[
+	S_i = \frac{\mathrm{Var}_{\theta_i}\left( \mathbb{E}_{\boldsymbol{\theta}_{\sim i}}[Y \mid \theta_i] \right)}{\mathrm{Var}(Y)}, \quad
+	S_{T_i} = 1 - \frac{\mathrm{Var}_{\boldsymbol{\theta}_{\sim i}}\left( \mathbb{E}_{\theta_i}[Y \mid \boldsymbol{\theta}_{\sim i}] \right)}{\mathrm{Var}(Y)},
+	\]
+	donde $Y$ representa una variable de salida del modelo, $\theta_i$ es el parámetro de interés y $\boldsymbol{\theta}_{\sim i}$ denota el conjunto de parámetros restantes.
+	
+	Los índices de primer orden cuantifican la contribución directa de cada parámetro a la varianza de la salida, mientras que los índices totales capturan tanto los efectos individuales como las interacciones no lineales entre parámetros.
+	
+	\subsubsection*{Identificación y Priorización de Parámetros Clave}
+	
+	Los parámetros se clasificarán de acuerdo con sus índices de Sobol totales, identificando aquellos con mayor influencia global sobre la dinámica del sistema. Estos parámetros clave serán:
+	\begin{itemize}
+		\item Prioritarios para el análisis de inestabilidades de Turing.
+		\item Candidatos para el barrido paramétrico en la construcción del Atlas de Turing.
+		\item Indicadores de posibles puntos de control metabólico con relevancia biológica y terapéutica.
+	\end{itemize}
+	
+	Asimismo, se evaluará la correlación entre sensibilidad paramétrica y propiedades topológicas de la red (grado, intermediación, pertenencia comunitaria), permitiendo establecer un vínculo cuantitativo entre estructura de red y control dinámico.
+	
+	\subsubsection*{Relación con la Robustez del Sistema}
+	
+	Finalmente, el análisis de sensibilidad permitirá caracterizar la robustez del sistema metabólico frente a perturbaciones paramétricas, identificando regiones del espacio de parámetros donde la dinámica es estable y regiones cercanas a transiciones dinámicas críticas. Esta información será fundamental para interpretar la aparición de patrones espaciales como un fenómeno emergente asociado a la pérdida de estabilidad del estado homogéneo.
+	
+	
+		\subsection*{Fase 4: Construcción del Atlas de Turing}
+	
+	La fase final del proyecto consiste en la extensión espaciotemporal del modelo dinámico reducido mediante la formulación de sistemas de reacción--difusión, con el objetivo de identificar y caracterizar inestabilidades de tipo Turing en la red metabólica del cáncer de mama. Esta fase integra la información estructural, dinámica y paramétrica obtenida en las etapas anteriores para construir un marco predictivo de patrones espaciales emergentes.
+	
+	\subsubsection*{Formulación del Modelo de Reacción--Difusión}
+	
+	A partir del sistema de ecuaciones diferenciales ordinarias reducido (obtenido por escalas de tiempo o renormalización), se seleccionarán pares o subconjuntos mínimos de variables dinámicas $\{u, v\}$ que representen metabolitos o variables efectivas con roles funcionales diferenciados. El modelo espaciotemporal se formulará como:
+	\[
+	\frac{\partial u}{\partial t} = f(u,v;\boldsymbol{\theta}) + D_u \nabla^2 u, \quad
+	\frac{\partial v}{\partial t} = g(u,v;\boldsymbol{\theta}) + D_v \nabla^2 v,
+	\]
+	donde $f$ y $g$ corresponden a las funciones de reacción no lineales derivadas directamente del SEDO, y $D_u$, $D_v$ son coeficientes de difusión efectivos que representan el transporte metabólico en el microambiente tumoral.
+	
+	Los coeficientes de difusión se considerarán desiguales ($D_v \gg D_u$) para reflejar diferencias físicas y bioquímicas en movilidad molecular, tales como difusión facilitada, transporte activo o acoplamiento con el espacio extracelular.
+	
+	\subsubsection*{Análisis de Estabilidad Lineal}
+	
+	Para cada sistema candidato, se identificará el estado estacionario homogéneo $(u^*, v^*)$ resolviendo:
+	\[
+	f(u^*, v^*) = 0, \quad g(u^*, v^*) = 0.
+	\]
+	Posteriormente, el sistema se linealizará alrededor de dicho estado estacionario, obteniendo el Jacobiano:
+	\[
+	J =
+	\begin{pmatrix}
+		\frac{\partial f}{\partial u} & \frac{\partial f}{\partial v} \\
+		\frac{\partial g}{\partial u} & \frac{\partial g}{\partial v}
+	\end{pmatrix}_{(u^*, v^*)}.
+	\]
+	
+	La estabilidad del estado homogéneo en ausencia de difusión se verificará imponiendo las condiciones clásicas:
+	\[
+	\text{tr}(J) < 0, \quad \det(J) > 0.
+	\]
+	
+	La incorporación de difusión conduce a una relación de dispersión dependiente del número de onda $k$, cuyos autovalores $\lambda(k)$ se analizarán para identificar rangos de $k > 0$ donde $\text{Re}(\lambda(k)) > 0$. La existencia de estos modos inestables constituye la condición matemática de una inestabilidad de Turing.
+	
+	\subsubsection*{Barrido Paramétrico y Regiones de Inestabilidad}
+	
+	Utilizando los parámetros clave identificados en la Fase 3, se realizará un barrido sistemático del espacio paramétrico $(\boldsymbol{\theta}, D_u, D_v)$. Para cada combinación de parámetros se evaluará:
+	\begin{itemize}
+		\item Estabilidad del estado homogéneo sin difusión.
+		\item Aparición de modos espaciales inestables inducidos por difusión.
+		\item Tipo de bifurcación asociada a la pérdida de estabilidad.
+	\end{itemize}
+	
+	Este análisis permitirá identificar regiones bien definidas del espacio de parámetros donde el sistema es susceptible a la formación de patrones espaciales.
+	
+	\subsubsection*{Simulación Numérica de Patrones Espaciales}
+	
+	En las regiones del espacio paramétrico que satisfagan las condiciones de Turing, se resolverán numéricamente las ecuaciones de reacción--difusión en dominios espaciales unidimensionales y bidimensionales. Se emplearán métodos numéricos robustos, como el método de líneas o esquemas de volúmenes finitos, implementados en bibliotecas científicas de Python.
+	
+	Las simulaciones se iniciarán a partir de perturbaciones espaciales pequeñas alrededor del estado homogéneo, permitiendo observar la autoorganización espontánea del sistema hacia patrones estacionarios o cuasi-estacionarios.
+	
+	\subsubsection*{Clasificación y Construcción del Atlas de Turing}
+	
+	Los patrones espaciales obtenidos se clasificarán de acuerdo con su morfología dominante, tales como:
+	\begin{itemize}
+		\item Manchas aisladas (spots).
+		\item Rayas periódicas (stripes).
+		\item Patrones mixtos o transicionales.
+	\end{itemize}
+	
+	Finalmente, se construirá el \textbf{Atlas de Turing metabólico}, definido como un mapeo multidimensional que asocia regiones del espacio de parámetros con los tipos de patrones espaciales emergentes. Este atlas funcionará como una herramienta predictiva que relaciona control metabólico, difusión y heterogeneidad espacial, proporcionando una interpretación mecanística de la organización metabólica intratumoral.
+	
+	
+	% ======================================================
+	\section{Resultados Esperados}
+	
+	\begin{itemize}
+		\item Caracterización topológica completa de la red metabólica.
+		\item Modelo dinámico de la red.
+		\item Ranking de parámetros sensibles.
+		\item Atlas de Turing metabólico.
+	\end{itemize}
+	
+	% ======================================================
+	\section{Impacto Esperado}
+	
+	El Atlas de Turing proporcionará un marco predictivo para la heterogeneidad metabólica intratumoral y nuevas hipótesis terapéuticas.
+	
+	% ======================================================
+	\section{Consideraciones Éticas y Limitaciones}
+	
+	Proyecto computacional basado en datos públicos. Las principales limitaciones incluyen la escasez de datos cinéticos \textit{in vivo}.
+	
+	% ======================================================
+	\section{Referencias Bibliográficas}
+	
+	% IMPORTANTE: Necesitas crear un archivo 'referencias.bib' con todas las citas
+	\bibliography{referencias}
+	
+\end{document}
+

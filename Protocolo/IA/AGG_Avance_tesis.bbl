@@ -1,0 +1,220 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Hanahan and Weinberg(2011)]{Hanahan2011}
+Douglas Hanahan and Robert~A. Weinberg.
+\newblock Hallmarks of cancer: The next generation.
+\newblock \emph{Cell}, 144\penalty0 (5):\penalty0 646--674, 2011.
+\newblock \doi{10.1016/j.cell.2011.02.013}.
+
+\bibitem[Barabási and Oltvai(2004)]{Barabasi2004}
+Albert-László Barabási and Zoltán~N. Oltvai.
+\newblock Network biology: Understanding the cell's functional organization.
+\newblock \emph{Nature Reviews Genetics}, 5\penalty0 (2):\penalty0 101--113,
+  2004.
+\newblock \doi{10.1038/nrg1272}.
+
+\bibitem[Gatenby and Gillies(2004)]{Gatenby2004}
+Robert~A. Gatenby and Robert~J. Gillies.
+\newblock Why do cancers have high aerobic glycolysis?
+\newblock \emph{Nature Reviews Cancer}, 4\penalty0 (11):\penalty0 891--899,
+  2004.
+\newblock \doi{10.1038/nrc1478}.
+
+\bibitem[Zhang et~al.(2017)Zhang, Pavlova, and Thompson]{Zhang2017}
+Jing Zhang, Natalia~N. Pavlova, and Craig~B. Thompson.
+\newblock Cancer cell metabolism: the essential role of the nonessential amino
+  acid, glutamine.
+\newblock \emph{The EMBO Journal}, 36\penalty0 (10):\penalty0 1302--1315, 2017.
+\newblock \doi{10.15252/embj.201696151}.
+
+\bibitem[Brennan et~al.(2025)Brennan, Krause, Villar-Sepúlveda, and
+  Prior]{Brennan2025}
+M.~Brennan, A.~L. Krause, E.~Villar-Sepúlveda, and C.~B. Prior.
+\newblock Pattern formation as a resilience mechanism in cancer immunotherapy.
+\newblock \emph{Bulletin of Mathematical Biology}, 87\penalty0 (8), 2025.
+\newblock \doi{10.1007/s11538-025-01485-3}.
+
+\bibitem[Turing(1990)]{Turing1990}
+Alan~M. Turing.
+\newblock The chemical basis of morphogenesis.
+\newblock \emph{Bulletin of Mathematical Biology}, 52\penalty0 (1):\penalty0
+  153--197, 1990.
+\newblock Reimpresión del trabajo original de 1952.
+
+\bibitem[Pavlova and Thompson(2016)]{Pavlova2016}
+Natalia~N. Pavlova and Craig~B. Thompson.
+\newblock The emerging hallmarks of cancer metabolism.
+\newblock \emph{Cell Metabolism}, 23\penalty0 (1):\penalty0 27--47, 2016.
+\newblock \doi{10.1016/j.cmet.2015.12.006}.
+
+\bibitem[Resendis-Antonio et~al.(2010)Resendis-Antonio, Reed, Encarnación,
+  Collado-Vides, and Palsson]{Resendis2010}
+O.~Resendis-Antonio, J.~L. Reed, S.~Encarnación, J.~Collado-Vides, and B.~Ø.
+  Palsson.
+\newblock Metabolic reconstruction and modeling of cancer.
+\newblock \emph{Journal of Theoretical Biology}, 264\penalty0 (4):\penalty0
+  1250--1262, 2010.
+\newblock \doi{10.1016/j.jtbi.2010.03.020}.
+
+\bibitem[Liebermeister et~al.(2014)Liebermeister, Noor, Flamholz, Davidi,
+  Bernhardt, and Milo]{Liebermeister2010}
+Wolfram Liebermeister, Elad Noor, Avi Flamholz, Dan Davidi, J{\"o}rg Bernhardt,
+  and Ron Milo.
+\newblock A visual account of protein investment in cellular functions.
+\newblock \emph{Proceedings of the National Academy of Sciences of the United
+  States of America}, 111\penalty0 (23):\penalty0 8488--8493, 2014.
+
+\bibitem[Cornish-Bowden(2013)]{Cornish2013}
+Athel Cornish-Bowden.
+\newblock \emph{Fundamentals of enzyme kinetics}.
+\newblock Elsevier, 2013.
+
+\bibitem[Swartz and Harrison(2013)]{Swartz2013}
+Harold~M. Swartz and David~K. Harrison, editors.
+\newblock \emph{Oxygen Transport to Tissue XXXVI}, volume 812 of \emph{Advances
+  in Experimental Medicine and Biology}.
+\newblock Springer, New York, 2013.
+
+\bibitem[Kondo and Miura(2010)]{Kondo2010}
+Shigeru Kondo and Takashi Miura.
+\newblock Reaction-diffusion model as a framework for understanding biological
+  pattern formation.
+\newblock \emph{Science}, 329\penalty0 (5999):\penalty0 1616--1620, 2010.
+\newblock \doi{10.1126/science.1179047}.
+
+\bibitem[Brunk et~al.(2018)Brunk, Sahoo, Zielinski, Altunkaya, Dr{\"a}ger, Mih,
+  Gatto, Nilsson, Preciat~Gonzalez, Aurich, et~al.]{brunk2018}
+Elizabeth Brunk, Swagatika Sahoo, Daniel~C Zielinski, Ali Altunkaya, Andreas
+  Dr{\"a}ger, Nathan Mih, Francesco Gatto, Avlant Nilsson, German~A
+  Preciat~Gonzalez, Maike~K Aurich, et~al.
+\newblock Recon3d enables a three-dimensional view of gene variation in human
+  metabolism.
+\newblock \emph{Nature Biotechnology}, 36\penalty0 (3):\penalty0 272--281,
+  2018.
+
+\bibitem[Caspi et~al.(2020)Caspi, Billington, Keseler, Kothari, Krummenacker,
+  Midford, Ong, Paley, Subhraveti, and Karp]{caspi2020}
+Ron Caspi, Richard Billington, Ingrid~M Keseler, Anamika Kothari, Markus
+  Krummenacker, Peter~E Midford, Wai~Kit Ong, Suzanne Paley, Pallavi
+  Subhraveti, and Peter~D Karp.
+\newblock The metacyc database of metabolic pathways and enzymes--a 2019
+  update.
+\newblock \emph{Nucleic Acids Research}, 48\penalty0 (D1):\penalty0 D445--D453,
+  2020.
+
+\bibitem[Hagberg et~al.(2008)Hagberg, Schult, and Swart]{hagberg2008}
+Aric~A Hagberg, Daniel~A Schult, and Pieter~J Swart.
+\newblock \emph{Exploring network structure, dynamics, and function using
+  NetworkX}.
+\newblock Los Alamos National Lab.(LANL), Los Alamos, NM (United States), 2008.
+
+\bibitem[Shannon et~al.(2003)Shannon, Markiel, Ozier, Baliga, Wang, Ramage,
+  Amin, Schwikowski, and Ideker]{shannon2003}
+Paul Shannon, Andrew Markiel, Owen Ozier, Nitin~S Baliga, Jonathan~T Wang,
+  Daniel Ramage, Nada Amin, Benno Schwikowski, and Trey Ideker.
+\newblock Cytoscape: a software environment for integrated models of
+  biomolecular interaction networks.
+\newblock \emph{Genome Research}, 13\penalty0 (11):\penalty0 2498--2504, 2003.
+
+\bibitem[Joy et~al.(2005)Joy, Brock, Ingber, and Huang]{joy2005}
+Mike~P Joy, Amy Brock, Donald~E Ingber, and Sui Huang.
+\newblock High-betweenness proteins in the yeast protein interaction network.
+\newblock \emph{Bioinformatics}, 21\penalty0 (suppl\_1):\penalty0 i99--i107,
+  2005.
+
+\bibitem[Watts and Strogatz(1998)]{watts1998}
+Duncan~J Watts and Steven~H Strogatz.
+\newblock Collective dynamics of 'small-world' networks.
+\newblock \emph{Nature}, 393\penalty0 (6684):\penalty0 440--442, 1998.
+
+\bibitem[Blondel et~al.(2008)Blondel, Guillaume, Lambiotte, and
+  Lefebvre]{blondel2008}
+Vincent~D Blondel, Jean-Loup Guillaume, Renaud Lambiotte, and Etienne Lefebvre.
+\newblock Fast unfolding of communities in large networks.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2008\penalty0 (10):\penalty0 P10008, 2008.
+
+\bibitem[Chang et~al.(2021)Chang, Jeske, Ulbrich, Hofmann, Koblitz, Schomburg,
+  Neumann-Schaal, Jahn, and Schomburg]{chang2021}
+Antje Chang, Lisa Jeske, Sandra Ulbrich, Julia Hofmann, Julia Koblitz, Ida
+  Schomburg, Meina Neumann-Schaal, Dieter Jahn, and Dietmar Schomburg.
+\newblock Brenda, the elixir core data resource in 2021: new developments and
+  updates.
+\newblock \emph{Nucleic Acids Research}, 49\penalty0 (D1):\penalty0 D498--D508,
+  2021.
+
+\bibitem[Wittig et~al.(2012)Wittig, Kania, Golebiewski, Rey, Shi, Jong, Algaa,
+  Weidemann, Rojas, and M{\"u}ller]{wittig2012}
+Ulrike Wittig, Renate Kania, Martin Golebiewski, Michael Rey, Lei Shi, Lenneke
+  Jong, Enkhjargal Algaa, Andreas Weidemann, Isabel Rojas, and Wolfgang
+  M{\"u}ller.
+\newblock Sabio-rk--database for biochemical reaction kinetics.
+\newblock \emph{Nucleic Acids Research}, 40\penalty0 (D1):\penalty0 D790--D796,
+  2012.
+
+\bibitem[Stanford et~al.(2013)Stanford, Lubitz, Smallbone, Klipp, Mendes, and
+  Liebermeister]{stanford2013}
+Natalie~J Stanford, Timo Lubitz, Kieran Smallbone, Edda Klipp, Pedro Mendes,
+  and Wolfram Liebermeister.
+\newblock Systematic construction of kinetic models from genome-scale metabolic
+  networks.
+\newblock \emph{PloS One}, 8\penalty0 (11):\penalty0 e79195, 2013.
+
+\bibitem[McKay et~al.(1979)McKay, Beckman, and Conover]{mckay1979}
+Michael~D McKay, Richard~J Beckman, and William~J Conover.
+\newblock A comparison of three methods for selecting values of input variables
+  in the analysis of output from a computer code.
+\newblock \emph{Technometrics}, 21\penalty0 (2):\penalty0 239--245, 1979.
+
+\bibitem[Sobol(2001)]{sobol2001}
+Ilya~M Sobol.
+\newblock Global sensitivity indices for nonlinear mathematical models and
+  their monte carlo estimates.
+\newblock \emph{Mathematics and Computers in Simulation}, 55\penalty0
+  (1-3):\penalty0 271--280, 2001.
+
+\bibitem[Saltelli et~al.(2010)Saltelli, Annoni, Azzini, Campolongo, Ratto, and
+  Tarantola]{saltelli2010}
+Andrea Saltelli, Paola Annoni, Ivano Azzini, Francesca Campolongo, Marco Ratto,
+  and Stefano Tarantola.
+\newblock Variance based sensitivity analysis of model output. design and
+  estimator for the total sensitivity index.
+\newblock \emph{Computer Physics Communications}, 181\penalty0 (2):\penalty0
+  259--270, 2010.
+
+\bibitem[Turing(1952)]{turing1952}
+Alan~M Turing.
+\newblock The chemical basis of morphogenesis.
+\newblock \emph{Philosophical Transactions of the Royal Society of London.
+  Series B, Biological Sciences}, 237\penalty0 (641):\penalty0 37--72, 1952.
+
+\bibitem[Alarc{\'o}n et~al.(2004)Alarc{\'o}n, Byrne, and Maini]{alarcon2004}
+Tom{\'a}s Alarc{\'o}n, Helen~M Byrne, and Philip~K Maini.
+\newblock A cellular automaton model for tumour growth in inhomogeneous
+  environment.
+\newblock \emph{Journal of Theoretical Biology}, 225\penalty0 (2):\penalty0
+  257--274, 2004.
+
+\bibitem[Murray(2012)]{murray2012}
+James~D Murray.
+\newblock \emph{Mathematical Biology: I. An Introduction}, volume~17.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem[Logg et~al.(2012)Logg, Mardal, and Wells]{logg2012}
+Anders Logg, Kent-Andre Mardal, and Garth Wells.
+\newblock \emph{Automated solution of differential equations by the finite
+  element method: The FEniCS book}, volume~84.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem[Strogatz(2015)]{strogatz2015}
+Steven~H Strogatz.
+\newblock \emph{Nonlinear dynamics and chaos: with applications to physics,
+  biology, chemistry, and engineering}.
+\newblock CRC press, 2015.
+
+\end{thebibliography}

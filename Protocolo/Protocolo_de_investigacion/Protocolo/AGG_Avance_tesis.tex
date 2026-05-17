@@ -1,0 +1,183 @@
+\documentclass[12pt,spanish]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\title{\textbf{Modelado multiescala de la red metabólica del cáncer de mama:}\\
+	Redes complejas y dinámica no lineal}
+\author{Alejandro Guerra González\\
+	Asesor: Dr. Erik César Herrera Hernández\\
+	Posgrado de Ciencias en Ingeniería Química \\
+	Facultad de Ciencias Químicas, UASLP}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section{Resumen}
+	
+	Este proyecto propone un marco de biología de sistemas para el estudio del cáncer de mama basado en la integración jerárquica de redes complejas y dinámica de sistemas no lineales. A partir de la reconstrucción de una red metabólica específica del cáncer de mama integrando la información de bases de datos oficiales (KEGG, SRTING,...), la red se caracteriza como un sistema complejo, se descompone en comunidades mediante el algoritmo de Louvain y posteriormente se reduce dinámicamente mediante dos enfoques complementarios: separación de escalas de tiempo y renormalización por comunidades. El resultado es un sistema efectivo de ecuaciones diferenciales ordinarias (EDO), con una ecuación representativa por comunidad metabólica.
+	
+	Sobre este sistema reducido se analiza la complejidad dinámica, evaluando estabilidad, robustez y sensibilidad paramétrica. El objetivo final es relacionar la organización topológica de la red, su robustez estructural y su complejidad dinámica con la heterogeneidad metabólica observada en tumores de mama.
+	
+	\section{Introducción y justificación}
+	
+	Segun la Organizacion Mundial de la Salud (OMS), se denomina cancer a un amplio grupo de enfermedades que pueden afectar a cualquier parte del organismo; también se habla de «tumores malignos» o «neoplasias malignas». Una característica definitoria del cáncer es la multiplicación rápida de células anormales que se extienden más allá de sus límites habituales y pueden invadir partes adyacentes del cuerpo o propagarse a otros órganos, en un proceso que se denomina «metástasis». En 2020 fue la primera causa de muerte a nivel mundial, llegando a un numero total de casi 10 millones de defunciones por esta enfermedad. Los cánceres más comunes en 2020, por lo que se refiere a incidencia, fueron los siguientes:
+	
+	\begin{itemize}
+		\item mama (2,26 millones de casos);
+		\item pulmón (2,21 millones de casos);
+		\item colorrectal (1,93 millones de casos);
+		\item próstata (1,41 millones de casos);
+		\item piel (distinto del melanoma) (1,20 millones de casos); y
+		\item gástrico (1,09 millones de casos).
+	\end{itemize}
+	
+	Los tipos de cáncer que causaron un mayor número de fallecimientos en 2020 fueron los siguientes:
+	
+	\begin{itemize}
+		\item pulmón (1,8 millones de defunciones);
+		\item colorrectal (916\,000 defunciones);
+		\item hepático (830\,000 defunciones);
+		\item gástrico (769\,000 defunciones); y
+		\item mama (685\,000 defunciones).
+	\end{itemize}
+	
+	
+	Cada año, cerca de 400 000 niños contraen cáncer. Aunque los tipos de cáncer más frecuentes varían en función del país, el de cuello uterino es el más habitual en 23 países. 
+	
+	El cáncer de mama es una enfermedad sistémica caracterizada por una profunda reprogramación metabólica, heterogeneidad intratumoral y alta capacidad de adaptación frente a perturbaciones terapéuticas. Estas propiedades no pueden ser comprendidas adecuadamente mediante enfoques reduccionistas, sino que requieren una perspectiva integradora capaz de capturar interacciones no lineales, organización modular y dinámica multiescala.
+	
+	El cáncer de manera general es una enfermedad multifactorial que surge como resultado de alteraciones coordinadas en múltiples niveles de organización biológica. El enfoque de redes complejas permite interpretar el cáncer como un fenómeno sistémico, más que como la consecuencia de mutaciones aisladas.
+	
+	La investigación moderna sobre el cáncer de mama ha adoptado la teoría de redes complejas para redefinir la enfermedad como un sistema adaptativo complejo con una complejidad algorítmica intratable,. Este enfoque permite modelar propiedades emergentes, como la invasión metastásica y la resistencia a los tratamientos, que surgen de comportamientos colectivos que no pueden explicarse únicamente por la suma de sus partes moleculares,. Una de sus utilidades más destacadas es la caracterización de subtipos moleculares, donde algoritmos como DCloc y DCglob analizan la topología diferencial de las redes de correlación para identificar cómo se organizan los genes en tumores con receptores de estrógeno positivos o negativos,. Estas herramientas han revelado que la enfermedad puede ser entendida como un conjunto de redes de regulación genética donde incluso genes que no varían su expresión total pueden mostrar patrones de conectividad radicalmente distintos según el subtipo clínico.
+	En el nivel proteómico, el análisis de redes de interacción proteína-proteína (PPI) ha sido fundamental para identificar genes "hub" o nodos centrales, como FPR2, CXCR4 y GPR37, que desempeñan roles desproporcionadamente importantes en la metástasis hacia órganos específicos como el cerebro y los pulmones,,. Además, estas redes permiten visualizar la metástasis no como un acto celular aislado, sino como el resultado de redes de comunicación paracrina en las que las células cancerosas cooptan a fibroblastos, células endoteliales y leucocitos para remodelar la matriz extracelular y facilitar la invasión. De igual manera, el estudio de redes basadas en información mutua ha permitido descifrar cómo familias de micro-ARN, particularmente miR-200 y miR-199, cooperan para regular la plasticidad epitelio-mesénquima, un proceso crítico para la supervivencia y propagación del tumor.
+	Hacia el futuro, la utilidad de las redes complejas se expande mediante la creación de Gemelos Digitales, los cuales utilizan estructuras multicapa para integrar datos genómicos, proteómicos y clínicos en réplicas virtuales dinámicas que predicen la trayectoria de la enfermedad y personalizan la terapia,,. Complementariamente, la aplicación de la teoría de redes en el aprendizaje profundo ha llevado al desarrollo de redes neuronales hipercomplejas y mapas de atención que mejoran la interpretación de mamografías,. Estos modelos avanzados permiten capturar relaciones locales entre las imágenes y los focos de interés clínico, ayudando a los radiólogos a identificar tumores malignos en etapas tempranas con una precisión superior y mediante algoritmos computacionalmente más eficientes.
+	
+	\subsection{Conexión con modelos dinámicos}
+	
+	El formalismo de redes complejas permite extender el análisis estructural hacia modelos dinámicos, por ejemplo mediante sistemas de ecuaciones diferenciales ordinarias acopladas por la matriz de adyacencia de la red: 
+	\begin{equation}
+		\dot{x}_i = f(x_i) + \sum_{j} A_{ij}\, g(x_i, x_j)
+	\end{equation}
+	
+	
+	donde $x_i$ representa la actividad del nodo $i$ y $A_{ij}$ codifica la estructura de interacciones. Este enfoque posibilita el estudio de estabilidad, bifurcaciones y transiciones dinámicas relevantes para la progresión tumoral.
+	
+	Las redes metabólicas del cáncer constituyen sistemas complejos donde la robustez funcional emerge de la redundancia, la modularidad y la jerarquía topológica. Sin embargo, esta robustez estructural no implica necesariamente estabilidad dinámica, pudiendo coexistir con regímenes altamente sensibles y propensos a transiciones dinámicas. En este contexto, la biología de sistemas y la teoría de redes complejas proporcionan el marco conceptual para conectar estructura, función y dinámica.
+	
+	El objetivo de este trabajo es formular rigurosamente ambos tipos de modelos, analizar sus propiedades matemáticas fundamentales e implementar su resolución numérica utilizando Python.
+	
+	\section{Marco teórico}
+	
+	\subsection{Redes complejas en biología de sistemas}
+	
+	Una red compleja se define como un grafo cuya topología presenta propiedades emergentes no triviales, tales como distribuciones de grado no aleatorias, modularidad y presencia de nodos altamente conectados. En redes metabólicas, los nodos representan metabolitos o reacciones, mientras que las aristas representan transformaciones bioquímicas. Estas redes suelen exhibir topologías de tipo libre de escala, lo que confiere robustez frente a perturbaciones aleatorias y vulnerabilidad frente a ataques dirigidos.
+	
+	\subsection{Comunidades metabólicas y modularidad}
+	
+	La descomposición de la red en comunidades mediante el algoritmo de Louvain permite identificar módulos funcionales altamente interconectados. Estas comunidades pueden interpretarse como unidades metabólicas coherentes, y constituyen la escala mesoscópica natural para la reducción dinámica del sistema.
+	
+	\subsection{Robustez estructural y dinámica}
+	
+	La robustez estructural se refiere a la capacidad de la red para mantener su conectividad global frente a perturbaciones topológicas, mientras que la robustez dinámica describe la persistencia de estados estacionarios o atractores frente a variaciones paramétricas. En sistemas cancerosos, la robustez se asocia a la capacidad adaptativa y a la resistencia terapéutica.
+	
+	\subsection{Complejidad en sistemas dinámicos}
+	
+	Desde la dinámica no lineal, la complejidad se manifiesta mediante la coexistencia de múltiples escalas temporales, sensibilidad a condiciones iniciales, bifurcaciones y emergencia de patrones espacio-temporales. La transición de una red compleja a un sistema de EDO permite estudiar cómo la complejidad estructural se traduce en complejidad dinámica.
+	
+	\subsection{Red metabólica del cáncer de mama}
+	
+	El metabolismo del cáncer de mama involucra metabolitos centrales como glucosa, lactato, glutamina, NADH/NAD$^+$ y ATP, así como rutas clave como la glucólisis aeróbica, el metabolismo de glutamina y lípidos. Estas rutas se encuentran acopladas a vías de señalización como PI3K/Akt/mTOR y HIF-1$\alpha$, integrando metabolismo, señalización celular y microambiente tumoral.
+	
+	\section{Hipótesis y objetivos}
+	
+	\subsection{Hipótesis}
+	
+	La reducción multiescala de la red metabólica del cáncer de mama a nivel de comunidades permite identificar sistemas dinámicos efectivos que exhiben robustez estructural, complejidad dinámica e inestabilidades de tipo Turing responsables de la heterogeneidad metabólica espacial.
+	
+	\subsection{Objetivo general}
+	
+	Desarrollar y analizar un modelo dinámico multiescala de la red metabólica del cáncer de mama, integrando redes complejas, reducción por comunidades y modelos de reacción--difusión para estudiar robustez y complejidad dinámica.
+	
+	\subsection{Objetivos específicos}
+	
+	\begin{itemize}
+		\item Reconstruir y caracterizar la red metabólica del cáncer de mama como red compleja.
+		\item Identificar comunidades metabólicas funcionales mediante el algoritmo de Louvain.
+		\item Derivar un sistema de EDO reducido mediante separación de escalas de tiempo y renormalización.
+		\item Analizar estabilidad, robustez y sensibilidad paramétrica del sistema dinámico.
+		\item Explorar patrones espaciales de tipo Turing en el sistema reducido.
+	\end{itemize}
+	
+	\section{Metodología}
+	
+	\subsection{Fase 1: Reconstrucción y análisis topológico}
+	
+	Se reconstruirá la red metabólica a partir de KEGG y se caracterizará mediante métricas topológicas como grado, centralidad de intermediación, coeficiente de agrupamiento y modularidad, empleando herramientas computacionales en Python.
+	
+	\subsection{Fase 2: Detección de comunidades}
+	
+	Se aplicará el algoritmo de Louvain para identificar comunidades metabólicas, las cuales se interpretarán como módulos funcionales.
+	
+	\subsection{Fase 3: Reducción dinámica}
+	
+	La red será reducida mediante separación de escalas de tiempo y renormalización por comunidades, obteniendo un sistema de ecuaciones diferenciales ordinarias con una ecuación representativa por comunidad.
+	
+	\subsection{Fase 4: Análisis dinámico y robustez}
+	
+	Se evaluará la estabilidad de estados estacionarios, la sensibilidad paramétrica global (índices de Sobol) y la robustez dinámica frente a perturbaciones paramétricas.
+	
+	\subsection{Fase 5: Modelos de reacción--difusión y patrones de Turing}
+	
+	Se incorporarán términos de difusión al sistema reducido para analizar inestabilidades de Turing, realizar simulaciones numéricas y construir un Atlas de Turing metabólico.
+	
+	\section{Tareas del proyecto}
+	
+	\begin{enumerate}
+		\item Revisión bibliográfica en redes complejas, metabolismo del cáncer y dinámica de sistemas.
+		\item Reconstrucción de la red metabólica del cáncer de mama.
+		\item Análisis topológico y detección de comunidades.
+		\item Desarrollo del modelo dinámico completo y reducido.
+		\item Análisis de estabilidad, sensibilidad y robustez.
+		\item Implementación de modelos de reacción--difusión.
+		\item Construcción del Atlas de Turing.
+		\item Análisis e interpretación de resultados.
+		\item Redacción de informes, artículos y tesis.
+	\end{enumerate}
+	
+	\section{Calendario de actividades (24 meses)}
+	
+	\begin{longtable}{lcccc}
+		\toprule
+		\textbf{Actividad} & \textbf{1--6} & \textbf{7--12} & \textbf{13--18} & \textbf{19--24} \\
+		\midrule
+		Revisión bibliográfica & X &  &  &  \\
+		Reconstrucción de la red & X & X &  &  \\
+		Análisis topológico y comunidades &  & X &  &  \\
+		Modelo dinámico y reducción &  & X & X &  \\
+		Análisis de robustez y sensibilidad &  &  & X &  \\
+		Modelos de reacción--difusión &  &  & X & X \\
+		Atlas de Turing &  &  &  & X \\
+		Redacción final &  &  &  & X \\
+		\bottomrule
+	\end{longtable}
+	
+	\section{Resultados esperados}
+	
+	Se espera obtener una caracterización topológica completa de la red metabólica del cáncer de mama, un modelo dinámico reducido interpretable, una cuantificación de la robustez y complejidad del sistema y un Atlas de Turing que relacione parámetros metabólicos con patrones espaciales emergentes.
+	
+	\section{Impacto esperado}
+	
+	Este trabajo contribuirá a un entendimiento sistémico del metabolismo del cáncer de mama, conectando estructura, dinámica y espacio, y generando hipótesis testables sobre heterogeneidad metabólica y posibles vulnerabilidades terapéuticas.
+	
+\end{document}

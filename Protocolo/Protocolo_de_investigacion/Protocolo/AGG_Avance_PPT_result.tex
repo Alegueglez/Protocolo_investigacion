@@ -1,0 +1,212 @@
+\documentclass[12pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{hyperref}
+
+% Configuración de metadatos
+\title[Redes Complejas: Cáncer vs Normal]{Análisis Comparativo de Redes Complejas:\\Cáncer de Mama vs. Células Normales}
+\author[A. Guerra González]{Alejandro Guerra González}
+\institute[FCQ-UASLP]{
+	Maestría en Ciencia en Ingeniería Química\\
+	Facultad de Ciencias Químicas\\
+	Universidad Autónoma de San Luis Potosí
+}
+\date{\today}
+
+\begin{document}
+	
+	% Diapositiva de título
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	% Índice
+	\begin{frame}{Índice}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Introducción}
+	\begin{frame}{Introducción}
+		\begin{itemize}
+			\item La biología de sistemas transforma la visión reduccionista hacia un enfoque integrador basado en redes de interacción.
+			\item Los sistemas biológicos operan como estructuras complejas donde múltiples biomoléculas interactúan coordinadamente para generar fenotipos.
+			\item En cáncer de mama, el análisis de redes de interacción génica permite identificar alteraciones estructurales y funcionales entre células normales y tumorales.
+			\item \textbf{Objetivo:} Construir y comparar dos redes complejas (normal vs. cáncer) para identificar patrones topológicos y funcionales emergentes asociados a la patología.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Métodos y Teoría}
+	\begin{frame}{Métodos y Teoría}
+		\begin{itemize}
+			\item \textbf{Fundamento:} Grafos con nodos (genes/proteínas) y aristas (interacciones). Redes \textit{scale-free} con organización modular.
+			\item \textbf{Integración de datos:} Cruce de RegulonDB, BioGRID, KEGG, HPRD, STRING e IntNetDB para aumentar cobertura y reducir ruido experimental.
+			\item \textbf{Modelo Bayesiano:} Integración mediante Bayes Naïve. Cálculo de \textit{Likelihood Ratios} (LR) individuales y multiplicación para obtener LR total de confianza.
+			\item \textbf{Análisis de redes:} Filtrado por umbral de probabilidad. Métricas: coeficiente de clustering, longitud media de camino, modularidad e identificación de \textit{hubs}.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Estructura Topológica Global}
+	\begin{frame}{Estructura Topológica Global}
+		\begin{columns}
+			\begin{column}{0.48\textwidth}
+				\textbf{Red Normal}
+				\begin{itemize}
+					\item Arquitectura dispersa y modular ($Q = 0.7993$).
+					\item Módulos compartimentados: UPR, señalización hormonal, metabolismo lipídico.
+					\item Fronteras funcionales bien delimitadas.
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.48\textwidth}
+				\textbf{Red Cáncer de Mama}
+				\begin{itemize}
+					\item Componente gigante central denso e hiperconectado.
+					\item Hubs oncogénicos: AKT1, ERBB2, PIK3CA, MYC, CTNNB1.
+					\item Colapso de programas funcionales en estructura autorreforzante.
+					\item Pérdida de identidad tisular.
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		\vspace{0.3cm}
+		\centering \footnotesize \textit{(Insertar Figuras 1 y 2 del reporte original)}
+	\end{frame}
+	
+	\begin{frame}{Nodos, Aristas y Densidad}
+		\begin{itemize}
+			\item \textbf{Nodos:} 62 en ambas redes (controla tamaño muestral).
+			\item \textbf{Aristas:} 77 (cáncer) vs. 62 (normal) $\Rightarrow$ Incremento del $\sim 24\%$.
+			\item \textbf{Densidad ($\rho$):} $0.0407$ (cáncer) vs. $0.0328$ (normal).
+			\item \textbf{Interpretación:} Mayor compactación y entrelazamiento de rutas en el contexto tumoral, coherente con hiperactivación de vías de señalización y pérdida de especificidad funcional.
+		\end{itemize}
+		\begin{equation*}
+			\rho = \frac{2m}{n(n-1)}
+		\end{equation*}
+	\end{frame}
+	
+	\section{Dinámica de Propagación e Integración de Señales}
+	\begin{frame}{Dinámica de Propagación e Integración de Señales}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\textbf{Coeficiente de Clustering ($\bar{C}$)}
+				\begin{itemize}
+					\item Cáncer: $0.2716$
+					\item Normal: $0.0645$
+					\item $\Rightarrow$ Diferencia de $>4\times$.
+				\end{itemize}
+				\small{Formación de módulos redundantes y bucles de retroalimentación positiva. Alta robustez frente a perturbaciones terapéuticas.}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\textbf{Longitud Promedio de Camino ($\bar{\ell}$)}
+				\begin{itemize}
+					\item Cáncer: $4.75$
+					\item Normal: $6.34$
+				\end{itemize}
+				\small{Red normal: arquitectura jerárquica con filtrado/validación de señales. Red tumoral: propagación rápida y sin restricciones de señales proliferativas.}
+			\end{column}
+		\end{columns}
+		\begin{equation*}
+			C_i = \frac{2t_i}{k_i(k_i-1)}
+		\end{equation*}
+	\end{frame}
+	
+	\section{Organización Modular}
+	\begin{frame}{Organización Modular}
+		\begin{itemize}
+			\item \textbf{Modularidad ($Q$):} Mide la fuerza de división de una red en comunidades funcionales.
+			\item Normal: $Q = 0.7993$ (comunidades claramente delimitadas).
+			\item Cáncer: $Q = 0.6689$ (erosión de fronteras funcionales).
+			\item \textbf{Significado biológico:} La menor modularidad en cáncer refleja desdiferenciación celular y capacidad del tumor para reclutar y subvertir múltiples rutas simultáneamente.
+		\end{itemize}
+		\begin{equation*}
+			Q = \frac{1}{2m} \sum_{i,j} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)
+		\end{equation*}
+		\vspace{0.2cm}
+		\centering \footnotesize \textit{(Insertar Diagrama de Radar - Figura 4)}
+	\end{frame}
+	
+	\section{Roles Funcionales de los Genes}
+	\begin{frame}{Roles Funcionales de los Genes}
+		\begin{itemize}
+			\item \textbf{Reparación de ADN (11 genes):} Exclusivo del cáncer. Refleja desregulación/mutación en contexto de inestabilidad genómica, no mejora reparadora.
+			\item \textbf{Oncogenes (11 genes):} Predominan en cáncer. Actúan como \textit{hubs} que concentran y amplifican señales proliferativas.
+			\item \textbf{Other (29 normal vs 8 cáncer):} Mayor diversidad funcional en tejido sano. Contracción en tumor indica pérdida de identidad tisular.
+			\item \textbf{ECM/Epitelial y Lactación:} Ausentes o drásticamente reducidos en cáncer. Consistente con transición epitelio-mesenquimal (TEM) y pérdida de diferenciación terminal.
+		\end{itemize}
+		\centering \footnotesize \textit{(Insertar Tabla 2 y Figura 5 del reporte)}
+	\end{frame}
+	
+	\section{Síntesis Comparativa}
+	\begin{frame}{Síntesis Comparativa}
+		\begin{table}
+			\centering
+			\small
+			\begin{tabular}{lcc}
+				\toprule
+				\textbf{Propiedad} & \textbf{Cáncer de Mama} & \textbf{Células Normales} \\
+				\midrule
+				Aristas & 77 (mayor) & 62 (menor) \\
+				Densidad & 0.0407 & 0.0328 \\
+				Clustering & 0.2716 & 0.0645 \\
+				Long. camino & 4.75 & 6.34 \\
+				Modularidad & 0.6689 & 0.7993 \\
+				Señal dominante & Proliferación & Especialización \\
+				Arquitectura & Redundante & Jerárquica \\
+				\bottomrule
+			\end{tabular}
+			\caption{Comparación de propiedades estructurales de ambas redes.}
+		\end{table}
+	\end{frame}
+	
+	\section{Implicaciones Terapéuticas}
+	\begin{frame}{Implicaciones Terapéuticas}
+		\begin{enumerate}
+			\item \textbf{Terapias dirigidas a hubs:} Atacar nodos centrales o desestabilizar cliques es más eficaz que enfoques de blanco único.
+			\item \textbf{Resistencia por rutas alternativas:} Baja modularidad y alto clustering justifican terapias combinadas que apunten a múltiples nodos del mismo módulo.
+			\item \textbf{Restauración de modularidad:} Estrategias que induzcan diferenciación podrían complementar terapias citotóxicas, abordando la causa estructural de la desregulación.
+			\item \textbf{Marcadores topológicos:} Clustering y modularidad como biomarcadores de red para monitorizar progresión tumoral o respuesta terapéutica en estudios longitudinales.
+		\end{enumerate}
+	\end{frame}
+	
+	\section{Conclusiones}
+	\begin{frame}{Conclusiones}
+		\begin{itemize}
+			\item La transformación maligna conlleva una reorganización estructural profunda de la red de interacciones génicas.
+			\item La red tumoral es más densa ($+24\%$ aristas) e internamente más interconectada ($\times 4$ clustering), favoreciendo propagación incontrolada de señales oncogénicas.
+			\item La red normal mantiene una arquitectura de control jerárquica y especializada, perdida en el contexto tumoral.
+			\item La distribución de roles confirma dominancia de oncogenes/reparación aberrante en cáncer, y pérdida de identidad epitelial/especializada.
+			\item Las diferencias estructurales justifican estrategias terapéuticas basadas en topología de red, orientadas a desestabilizar módulos patológicos en lugar de atacar blancos aislados.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Referencias}
+	\begin{frame}[allowframebreaks]{Referencias Seleccionadas}
+		\footnotesize
+		\begin{thebibliography}{10}
+			\bibitem{albert2005} Albert, R. Scale-free networks in cell biology. \textit{J. Cell Sci.}, 118(21):4947–4957, 2005.
+			\bibitem{barabasi2011} Barabási, A.L., Gulbahce, N., Loscalzo, J. Network medicine. \textit{Nat. Rev. Genet.}, 12:56–68, 2011.
+			\bibitem{barabasi2004} Barabási, A.L., Oltvai, Z.N. Network biology. \textit{Nat. Rev. Genet.}, 5:101–113, 2004.
+			\bibitem{baranwal2016} Baranwal, M. et al. Network topology measures for identifying disease-gene association. \textit{BMC Bioinformatics}, 17:349, 2016.
+			\bibitem{bertho2021} Bertho, M. et al. Activation of PI3K/AKT/mTOR pathway causes drug resistance. \textit{Front. Pharmacol.}, 12:628690, 2021.
+			\bibitem{bhattacharyya2014} Bhattacharyya, M., Bandyopadhyay, S. Two-layer modular analysis. \textit{BMC Syst. Biol.}, 8:81, 2014.
+			\bibitem{chakrabarti2012} Chakrabarti, R. et al. ELF5 inhibits EMT. \textit{Nat. Cell Biol.}, 14:1212–1222, 2012.
+			\bibitem{deng2006} Deng, C.X. BRCA1: cell cycle checkpoint, genetic instability. \textit{Nucleic Acids Res.}, 34(5):1416–1426, 2006.
+			\bibitem{dongre2019} Dongre, A., Weinberg, R.A. New insights into EMT. \textit{Nat. Rev. Mol. Cell Biol.}, 20:69–84, 2019.
+			\bibitem{fontemaggi2014} Fontemaggi, G. et al. Gain of function mutant p53. \textit{Oncotarget}, 5(4):1006–1022, 2014.
+		\end{thebibliography}
+	\end{frame}
+	
+	% Diapositiva final
+	\begin{frame}
+		\centering
+		\Huge ¡Gracias por su atención!
+		\vspace{0.5cm}
+		\Large Preguntas y Comentarios
+	\end{frame}
+	
+\end{document}

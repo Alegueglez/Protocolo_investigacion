@@ -1,0 +1,463 @@
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+%% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, arrows.meta}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{colortbl} % <-- AÑADIDO PARA SOLUCIONAR ERROR DE \cellcolor
+
+%% Tema y colores azules profesionales
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamercolor{structure}{fg=blue!80!black}
+\setbeamercolor{frametitle}{fg=white, bg=blue!80!black}
+\setbeamercolor{block title}{fg=white, bg=blue!70!black}
+\setbeamercolor{block body}{fg=black, bg=blue!5!white}
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{itemize item}{fg=blue!80!black}
+\setbeamercolor{enumerate item}{fg=blue!80!black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+%% Información del documento
+\title[Modelado Multiescala: Cáncer de Mama]{Modelado multiescala de la red metabólica del cáncer de mama:\\Redes complejas y dinámica no lineal}
+\author[Alejandro Guerra González]{Alejandro Guerra González}
+\institute[UASLP]{
+	Posgrado de Ciencias en Ingeniería Química\\
+	Facultad de Ciencias Químicas\\
+	Universidad Autónoma de San Luis Potosí
+}
+\date{\today}
+
+\begin{document}
+	
+	%% Diapositiva de Título
+	\begin{frame}
+		\begin{figure}[htbp]
+			\centering
+			\includegraphics[width=0.8\textwidth]{mi_imagen.png}
+			\caption{Descripción breve de la imagen}
+			\label{fig:mi_imagen}
+		\end{figure}
+	\end{frame}
+	
+	%% Índice
+	\begin{frame}{Índice}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Introducción y Justificación}
+	\begin{frame}{Introducción y Justificación}
+		\begin{itemize}
+			\item \textbf{Contexto global (OMS, 2020):}
+			\begin{itemize}
+				\item Cáncer: 1\textsuperscript{ra} causa de muerte mundial ($\sim$10 millones de defunciones)
+				\item Cáncer de mama: 2.26 millones de casos, 685,000 defunciones
+			\end{itemize}
+			
+			\vspace{0.3cm}
+			\item \textbf{Naturaleza del problema:}
+			\begin{itemize}
+				\item Enfermedad sistémica con reprogramación metabólica profunda
+				\item Heterogeneidad intratumoral y alta capacidad de adaptación
+				\item Resistencia a perturbaciones terapéuticas
+			\end{itemize}
+			
+			\vspace{0.3cm}
+			\item \textbf{Necesidad de enfoques integradores:}
+			\begin{itemize}
+				\item Superar el reduccionismo tradicional
+				\item Capturar interacciones no lineales y organización modular
+				\item Dinámica multiescala del sistema
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Redes Complejas en Oncología}
+		\begin{columns}
+			\begin{column}{0.48\textwidth}
+				\textbf{Aportes principales:}
+				\begin{itemize}
+					\item Caracterización de subtipos moleculares (DCloc, DCglob)
+					\item Identificación de hubs proteicos (FPR2, CXCR4, GPR37)
+					\item Visualización de comunicación paracrina
+					\item Análisis de miRNAs (miR-200, miR-199)
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.48\textwidth}
+				\textbf{Fronteras tecnológicas:}
+				\begin{itemize}
+					\item Gemelos Digitales multicapa
+					\item Redes neuronales hipercomplejas
+					\item Mapas de atención para mamografías
+					\item Detección temprana mejorada
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		
+		\vspace{0.3cm}
+		\centering
+		\footnotesize \textit{El cáncer como sistema adaptativo complejo con complejidad algorítmica intratable}
+	\end{frame}
+	
+	\section{Conexión con Modelos Dinámicos}
+	\begin{frame}{Conexión con Modelos Dinámicos}
+		El formalismo de redes complejas permite extender el análisis estructural hacia modelos dinámicos:
+		
+		\begin{equation}
+			\dot{x}_i = f(x_i) + \sum_{j} A_{ij} \, g(x_i, x_j)
+		\end{equation}
+		
+		donde:
+		\begin{itemize}
+			\item $x_i$: Actividad del nodo $i$ (metabolito, enzima o vía)
+			\item $A_{ij}$: Matriz de adyacencia que codifica la estructura de interacciones
+			\item $f(x_i)$: Dinámica interna de cada comunidad metabólica
+			\item $g(x_i, x_j)$: Fuerza de interacción acoplada entre módulos
+		\end{itemize}
+		
+		\vspace{0.3cm}
+		\textbf{Paradoja tumoral:}
+		\begin{itemize}
+			\item \textit{Robustez estructural} $\neq$ \textit{Estabilidad dinámica}
+			\item Resistente a perturbaciones aleatorias pero sensible a ataques dirigidos
+			\item Coexistencia de redundancia y sensibilidad paramétrica
+		\end{itemize}
+	\end{frame}
+	
+	\section{Marco Teórico}
+	\begin{frame}{Marco Teórico I: Redes Complejas}
+		\begin{itemize}
+			\item \textbf{Definición:} Grafo con propiedades emergentes no triviales
+			\begin{itemize}
+				\item Distribuciones de grado no aleatorias
+				\item Modularidad y presencia de hubs
+				\item Topologías \textit{scale-free} (libres de escala)
+			\end{itemize}
+			
+			\vspace{0.2cm}
+			\item \textbf{Redes metabólicas:}
+			\begin{itemize}
+				\item Nodos: Metabolitos o reacciones
+				\item Aristas: Transformaciones bioquímicas
+				\item Robustez frente a fallos aleatorios
+				\item Vulnerabilidad a ataques dirigidos
+			\end{itemize}
+		\end{itemize}
+		
+		\vspace{0.3cm}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.6\textwidth]{network_topology.png}
+		\framebox[0.6\textwidth]{\centering [Espacio para imagen: network\_topology]}
+		\footnotesize \textit{Topología de redes: Del "hairball" al orden modular}
+	\end{frame}
+	
+	\begin{frame}{Marco Teórico II: Modularidad y Comunidades}
+		\begin{itemize}
+			\item \textbf{Algoritmo de Louvain:}
+			\begin{itemize}
+				\item Detección de comunidades metabólicas
+				\item Identificación de módulos funcionales altamente interconectados
+				\item Escala mesoscópica natural para reducción dinámica
+			\end{itemize}
+			
+			\vspace{0.2cm}
+			\item \textbf{Robustez:}
+			\begin{itemize}
+				\item \textit{Estructural}: Mantenimiento de conectividad global
+				\item \textit{Dinámica}: Persistencia de estados estacionarios
+				\item Asociada a capacidad adaptativa y resistencia terapéutica
+			\end{itemize}
+		\end{itemize}
+		
+		\vspace{0.3cm}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.7\textwidth]{louvain_algorithm.png}
+		\framebox[0.7\textwidth]{\centering [Espacio para imagen: louvain\_algorithm]}
+		\footnotesize \textit{Detección de comunidades: Reducción de complejidad (D×10)}
+	\end{frame}
+	
+	\begin{frame}{Marco Teórico III: Metabolismo del Cáncer de Mama}
+		\begin{columns}
+			\begin{column}{0.48\textwidth}
+				\textbf{Metabolitos centrales:}
+				\begin{itemize}
+					\item Glucosa
+					\item Lactato
+					\item Glutamina
+					\item NADH/NAD\textsuperscript{+}
+					\item ATP
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.48\textwidth}
+				\textbf{Rutas clave:}
+				\begin{itemize}
+					\item Glucólisis aeróbica (Warburg)
+					\item Metabolismo de glutamina
+					\item Metabolismo de lípidos
+					\item PI3K/Akt/mTOR
+					\item HIF-1$\alpha$
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		
+		\vspace{0.3cm}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.8\textwidth]{metabolic_pathways.png}
+		\framebox[0.8\textwidth]{\centering [Espacio para imagen: metabolic\_pathways]}
+		\footnotesize \textit{Integración de metabolismo, señalización y microambiente}
+	\end{frame}
+	
+	\section{Hipótesis y Objetivos}
+	\begin{frame}{Hipótesis de Trabajo}
+		\begin{quote}
+			\emph{La reducción multiescala de la red metabólica del cáncer de mama a nivel de comunidades permite identificar sistemas dinámicos efectivos que exhiben robustez estructural, complejidad dinámica e inestabilidades de tipo Turing responsables de la heterogeneidad metabólica espacial.}
+		\end{quote}
+		
+		\vspace{0.5cm}
+		\centering
+		\textbf{Elementos clave:}
+		\begin{itemize}
+			\item Reducción multiescala por comunidades
+			\item Sistemas dinámicos efectivos
+			\item Robustez estructural y complejidad dinámica
+			\item Patrones de Turing y heterogeneidad espacial
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Objetivos}
+		\textbf{Objetivo General:}
+		\begin{itemize}
+			\item Desarrollar y analizar un modelo dinámico multiescala de la red metabólica del cáncer de mama, integrando redes complejas, reducción por comunidades y modelos de reacción–difusión para estudiar robustez y complejidad dinámica.
+		\end{itemize}
+		
+		\vspace{0.3cm}
+		\textbf{Objetivos Específicos:}
+		\begin{enumerate}
+			\item Reconstruir y caracterizar la red metabólica como red compleja
+			\item Identificar comunidades metabólicas funcionales (Louvain)
+			\item Derivar sistema de EDO reducido (separación de escalas + renormalización)
+			\item Analizar estabilidad, robustez y sensibilidad paramétrica
+			\item Explorar patrones espaciales de tipo Turing
+		\end{enumerate}
+	\end{frame}
+	
+	\section{Metodología}
+	\begin{frame}{Metodología: Las 5 Fases del Proyecto}
+		\begin{columns}
+			\begin{column}{0.48\textwidth}
+				\textbf{Fase 1:} Reconstrucción y análisis topológico
+				\begin{itemize}
+					\item KEGG, STRING
+					\item Grado, centralidad, clustering
+				\end{itemize}
+				
+				\vspace{0.2cm}
+				\textbf{Fase 2:} Detección de comunidades
+				\begin{itemize}
+					\item Algoritmo de Louvain
+					\item Módulos funcionales
+				\end{itemize}
+				
+				\vspace{0.2cm}
+				\textbf{Fase 3:} Reducción dinámica
+				\begin{itemize}
+					\item Separación de escalas
+					\item Renormalización
+				\end{itemize}
+			\end{column}
+			\begin{column}{0.48\textwidth}
+				\textbf{Fase 4:} Análisis dinámico
+				\begin{itemize}
+					\item Estabilidad
+					\item Índices de Sobol
+					\item Robustez
+				\end{itemize}
+				
+				\vspace{0.2cm}
+				\textbf{Fase 5:} Patrones espaciales
+				\begin{itemize}
+					\item Reacción-difusión
+					\item Inestabilidades de Turing
+					\item Atlas de Turing
+				\end{itemize}
+			\end{column}
+		\end{columns}
+		
+		\vspace{0.3cm}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.9\textwidth]{methodology_phases.png}
+		\framebox[0.9\textwidth]{\centering [Espacio para imagen: methodology\_phases]}
+		\footnotesize \textit{Marco de trabajo estandarizado en Python}
+	\end{frame}
+	
+	\begin{frame}{Fase 1-2: De la Red Completa a las Comunidades}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.85\textwidth]{reduction_pipeline.png}
+		\framebox[0.85\textwidth]{\centering [Espacio para imagen: reduction\_pipeline]}
+		
+		\vspace{0.3cm}
+		\textbf{Proceso de reducción:}
+		\begin{enumerate}
+			\item \textbf{Caos:} Red metabólica global (KEGG)
+			\item \textbf{Orden:} Detección de módulos funcionales (Louvain)
+			\item \textbf{Síntesis:} Una ecuación representativa por comunidad
+		\end{enumerate}
+		
+		\vspace{0.2cm}
+		\footnotesize \textit{El metabolismo tumoral actúa a través de unidades coherentes, no gen por gen}
+	\end{frame}
+	
+	\begin{frame}{Fase 3-5: Traducción Matemática y Espacial}
+		\begin{itemize}
+			\item \textbf{Sistema de EDOs efectivo:}
+			\begin{equation}
+				\dot{x}_i = f(x_i) + \sum_{j} A_{ij} \, g(x_i, x_j)
+			\end{equation}
+			
+			\vspace{0.2cm}
+			\item \textbf{Incorporación espacial (Reacción-Difusión):}
+			\begin{equation}
+				\frac{\partial x_i}{\partial t} = f(x_i) + D_i \nabla^2 x_i + \sum_{j} A_{ij} \, g(x_i, x_j)
+			\end{equation}
+			donde $D_i$ es el coeficiente de difusión del metabolito $i$
+		\end{itemize}
+		
+		\vspace{0.3cm}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.75\textwidth]{reaction_diffusion.png}
+		\framebox[0.75\textwidth]{\centering [Espacio para imagen: reaction\_diffusion]}
+		\footnotesize \textit{De la dinámica temporal a los patrones espaciotemporales}
+	\end{frame}
+	
+	\begin{frame}{El Atlas de Turing Metabólico}
+		\centering
+		% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.9\textwidth]{turing_atlas.png}
+		\framebox[0.9\textwidth]{\centering [Espacio para imagen: turing\_atlas]}
+		
+		\vspace{0.3cm}
+		\textbf{Concepto:}
+		\begin{itemize}
+			\item La heterogeneidad intratumoral no es aleatoria
+			\item Es un patrón físico-matemático predecible
+			\item Mapeo de parámetros metabólicos $\rightarrow$ patrones espaciales
+			\item Conexión: Topología $\rightarrow$ EDOs $\rightarrow$ Difusión $\rightarrow$ Patrones
+		\end{itemize}
+	\end{frame}
+	
+	\section{Cronograma}
+	\begin{frame}{Calendario de Actividades (24 meses)}
+		\renewcommand{\arraystretch}{1.3}
+		\begin{tabular}{lcccc}
+			\toprule
+			\textbf{Actividad} & \textbf{1-6} & \textbf{7-12} & \textbf{13-18} & \textbf{19-24} \\
+			\midrule
+			Revisión bibliográfica & \cellcolor{blue!20}X & & & \\
+			Reconstrucción de la red & \cellcolor{blue!20}X & \cellcolor{blue!20}X & & \\
+			Análisis topológico y comunidades & & \cellcolor{blue!20}X & & \\
+			Modelo dinámico y reducción & & & \cellcolor{blue!20}X & \cellcolor{blue!20}X \\
+			Análisis de robustez y sensibilidad & & & \cellcolor{blue!20}X & \\
+			Modelos de reacción-difusión & & & & \cellcolor{blue!20}X \\
+			Atlas de Turing & & & & \cellcolor{blue!20}X \\
+			Redacción final & & & & \cellcolor{blue!20}X \\
+			\bottomrule
+		\end{tabular}
+		
+		\vspace{0.3cm}
+		\centering
+		\footnotesize \textit{Cronograma estructurado en 5 fases secuenciales}
+	\end{frame}
+	
+	\section{Resultados e Impacto}
+	\begin{frame}{Resultados Esperados}
+		\begin{itemize}
+			\item \textbf{Caracterización topológica completa:}
+			\begin{itemize}
+				\item Métricas de red (grado, centralidad, clustering, modularidad)
+				\item Identificación de hubs metabólicos
+			\end{itemize}
+			
+			\vspace{0.2cm}
+			\item \textbf{Modelo dinámico reducido:}
+			\begin{itemize}
+				\item Sistema de EDOs interpretable
+				\item Una ecuación por comunidad metabólica
+			\end{itemize}
+			
+			\vspace{0.2cm}
+			\item \textbf{Cuantificación de robustez:}
+			\begin{itemize}
+				\item Índices de sensibilidad de Sobol
+				\item Análisis de estabilidad
+			\end{itemize}
+			
+			\vspace{0.2cm}
+			\item \textbf{Atlas de Turing metabólico:}
+			\begin{itemize}
+				\item Mapeo parámetros $\rightarrow$ patrones espaciales
+				\item Predicción de heterogeneidad intratumoral
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Impacto Esperado}
+		\begin{columns}
+			\begin{column}{0.32\textwidth}
+				\centering
+				\textbf{Entendimiento Sistémico}
+				\vspace{0.2cm}
+				% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.8\textwidth]{impact_systemic.png}
+				\framebox[0.8\textwidth]{\centering [img]}
+				\footnotesize Descifrar reglas ocultas del metabolismo
+			\end{column}
+			\begin{column}{0.32\textwidth}
+				\centering
+				\textbf{Vulnerabilidades Terapéuticas}
+				\vspace{0.2cm}
+				% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.8\textwidth]{impact_therapeutic.png}
+				\framebox[0.8\textwidth]{\centering [img]}
+				\footnotesize Modelo \textit{in silico} para simulación
+			\end{column}
+			\begin{column}{0.32\textwidth}
+				\centering
+				\textbf{Gemelos Digitales}
+				\vspace{0.2cm}
+				% AQUÍ IRÍA LA IMAGEN SI LA TUVIERAS: \includegraphics[width=0.8\textwidth]{impact_digital.png}
+				\framebox[0.8\textwidth]{\centering [img]}
+				\footnotesize Hipótesis comprobables
+			\end{column}
+		\end{columns}
+		
+		\vspace{0.3cm}
+		\textbf{Contribuciones:}
+		\begin{itemize}
+			\item Conexión estructura-dinámica-espacio
+			\item Hipótesis testables sobre heterogeneidad metabólica
+			\item Identificación de vulnerabilidades terapéuticas basadas en topología
+		\end{itemize}
+	\end{frame}
+	
+	%% Diapositiva final
+	\begin{frame}
+		\centering
+		\Huge \textbf{¡Gracias por su atención!}
+		\vspace{1cm}
+		
+		\Large \textbf{Preguntas y comentarios}
+		
+		\vspace{1cm}
+		\normalsize
+		Alejandro Guerra González\\
+		Posgrado de Ciencias en Ingeniería Química\\
+		Facultad de Ciencias Químicas, UASLP\\
+		\vspace{0.3cm}
+		Asesor: Dr. Erik César Herrera Hernández
+	\end{frame}
+	
+\end{document}
